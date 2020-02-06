@@ -1,11 +1,11 @@
-interface $mol_app_todomvc_task {
+interface $hyoo_todomvc_task {
 	completed? : boolean
 	title? : string
 }
 
 namespace $.$$ {
 	
-	export class $mol_app_todomvc_add extends $.$mol_app_todomvc_add {
+	export class $hyoo_todomvc_add extends $.$hyoo_todomvc_add {
 		
 		event_press( next? : KeyboardEvent ) {
 			switch( next.keyCode ) {
@@ -15,7 +15,7 @@ namespace $.$$ {
 		
 	}
 	
-	export class $mol_app_todomvc extends $.$mol_app_todomvc {
+	export class $hyoo_todomvc extends $.$hyoo_todomvc {
 		
 		task_ids( next? : number[] ) : number[] {
 			return this.$.$mol_state_local.value( this.state_key( 'mol-todos' ) , next ) || []
@@ -89,10 +89,10 @@ namespace $.$$ {
 			return this.task_ids_filtered().map( id => this.Task_row( id ) )
 		}
 		
-		task( id : number , next? : $mol_app_todomvc_task ) {
+		task( id : number , next? : $hyoo_todomvc_task ) {
 			const key = this.state_key( `mol-todos-${id}` )
 			if( next === void 0 ) {
-				return this.$.$mol_state_local.value<$mol_app_todomvc_task>( key ) || { title : '' , completed : false }
+				return this.$.$mol_state_local.value<$hyoo_todomvc_task>( key ) || { title : '' , completed : false }
 			}
 			
 			this.$.$mol_state_local.value( key , next )

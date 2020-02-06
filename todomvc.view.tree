@@ -1,4 +1,4 @@
-$mol_app_todomvc $mol_scroll
+$hyoo_todomvc $mol_scroll
 	title \Todos
 	sub /
 		<= Page $mol_list
@@ -16,7 +16,7 @@ $mol_app_todomvc $mol_scroll
 									enabled <= head_complete_enabled false
 									checked?val <=> completed_all?val false
 									title \❯
-								<= Add $mol_app_todomvc_add
+								<= Add $hyoo_todomvc_add
 									value?val <=> task_title_new?val \
 									event_done?event <=> event_add?event null
 						<= List $mol_list
@@ -47,19 +47,19 @@ $mol_app_todomvc $mol_scroll
 									enabled <= sweep_enabled true
 									event_click?event <=> event_sweep?event null
 									sub / <= sweep_label \Clear completed
-	Task_row!id $mol_app_todomvc_task_row
+	Task_row!id $hyoo_todomvc_task_row
 		completed?val <=> task_completed!id?val false
 		title?val <=> task_title!id?val \
 		event_drop?event <=> event_task_drop!id?event null
 
-$mol_app_todomvc_add $mol_string
+$hyoo_todomvc_add $mol_string
 	hint \What needs to be done?
 	event *
 		^
 		keydown?event <=> event_press?event null
 	event_done?event null
 
-$mol_app_todomvc_task_row $mol_view
+$hyoo_todomvc_task_row $mol_view
 	minimal_height 64
 	sub /
 		<= Complete $mol_check
@@ -72,4 +72,4 @@ $mol_app_todomvc_task_row $mol_view
 			event_click?event <=> event_drop?event null
 	attr *
 		^
-		mol_app_todomvc_task_row_completed <= completed?val false
+		hyoo_todomvc_task_row_completed <= completed?val false

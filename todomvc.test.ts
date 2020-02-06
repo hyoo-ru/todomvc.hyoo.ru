@@ -4,7 +4,7 @@ namespace $.$$ {
 
 		'task add'( $ ) {
 
-			const app = $mol_app_todomvc.make({ $ })
+			const app = $hyoo_todomvc.make({ $ })
 
 			$mol_assert_like( app.task_ids() , [] )
 
@@ -22,7 +22,7 @@ namespace $.$$ {
 
 		'task rename'( $ ) {
 
-			const app = $mol_app_todomvc.make({ $ })
+			const app = $hyoo_todomvc.make({ $ })
 
 			app.Add().value( 'test title' )
 			app.Add().event_done()
@@ -36,7 +36,7 @@ namespace $.$$ {
 
 		'task toggle'( $ ) {
 
-			const app = $mol_app_todomvc.make({ $ })
+			const app = $hyoo_todomvc.make({ $ })
 
 			app.task_title_new( 'test title' )
 			app.event_add()
@@ -53,7 +53,7 @@ namespace $.$$ {
 
 		'navigation'( $ ) {
 
-			const app = $mol_app_todomvc.make({ $ })
+			const app = $hyoo_todomvc.make({ $ })
 
 			app.Add().value( 'test title' )
 			app.Add().event_done()
