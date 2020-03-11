@@ -7,9 +7,9 @@ namespace $.$$ {
 	
 	export class $hyoo_todomvc_add extends $.$hyoo_todomvc_add {
 		
-		event_press( next? : KeyboardEvent ) {
+		press( next? : KeyboardEvent ) {
 			switch( next.keyCode ) {
-				case $mol_keyboard_code.enter : return this.event_done( next )
+				case $mol_keyboard_code.enter : return this.done( next )
 			}
 		}
 		
@@ -72,7 +72,7 @@ namespace $.$$ {
 			return Math.max( 1 , 1 + Math.max( ... this.task_ids() ) )
 		}
 		
-		event_add( next? : Event ) {
+		add( next? : Event ) {
 			var title = this.task_title_new() 
 			if( !title ) return
 			
@@ -110,12 +110,12 @@ namespace $.$$ {
 			return this.task( id , next === undefined ? undefined : { ... this.task( id ) , title : next } ).title
 		}
 		
-		event_task_drop( id : number , next? : Event ) {
+		task_drop( id : number , next? : Event ) {
 			this.task( id , null )
 			this.task_ids( this.task_ids().filter( id2 => id !== id2 ) )
 		}
 
-		event_sweep() {
+		sweep() {
 			this.task_ids( this.task_ids().filter( id => {
 				if( !this.task( id ).completed ) return true
 				this.task( id , null )

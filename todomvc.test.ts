@@ -9,7 +9,7 @@ namespace $.$$ {
 			$mol_assert_like( app.task_ids() , [] )
 
 			app.Add().value( 'test title' )
-			app.Add().event_done()
+			app.Add().done()
 
 			$mol_assert_like( app.task_ids() , [ 1 ] )
 
@@ -25,7 +25,7 @@ namespace $.$$ {
 			const app = $hyoo_todomvc.make({ $ })
 
 			app.Add().value( 'test title' )
-			app.Add().event_done()
+			app.Add().done()
 
 			$mol_assert_equal( app.task_title( 1 ) , 'test title' )
 
@@ -39,14 +39,14 @@ namespace $.$$ {
 			const app = $hyoo_todomvc.make({ $ })
 
 			app.task_title_new( 'test title' )
-			app.event_add()
+			app.add()
 
 			$mol_assert_equal( app.task_completed( 1 ) , false )
 
-			app.Task_row(1).Complete().event_click()
+			app.Task_row(1).Complete().click()
 			$mol_assert_equal( app.task_completed( 1 ) , true )
 			
-			app.Task_row(1).Complete().event_click()
+			app.Task_row(1).Complete().click()
 			$mol_assert_equal( app.task_completed( 1 ) , false )
 			
 		} ,
@@ -56,22 +56,22 @@ namespace $.$$ {
 			const app = $hyoo_todomvc.make({ $ })
 
 			app.Add().value( 'test title' )
-			app.Add().event_done()
+			app.Add().done()
 
 			app.Add().value( 'test title 2' )
-			app.Add().event_done()
+			app.Add().done()
 
-			app.Task_row(1).Complete().event_click()
+			app.Task_row(1).Complete().click()
 
 			$mol_assert_like( app.task_ids_filtered() , [ 1 , 2 ] )
 
-			app.$.$mol_state_arg.href( app.Filter_completed().uri() )
+			$.$mol_state_arg.href( app.Filter_completed().uri() )
 			$mol_assert_like( app.task_ids_filtered() , [ 1 ] )
 			
-			app.$.$mol_state_arg.href( app.Filter_active().uri() )
+			$.$mol_state_arg.href( app.Filter_active().uri() )
 			$mol_assert_like( app.task_ids_filtered() , [ 2 ] )
 			
-			app.$.$mol_state_arg.href( app.Filter_all().uri() )
+			$.$mol_state_arg.href( app.Filter_all().uri() )
 			$mol_assert_like( app.task_ids_filtered() , [ 1 , 2 ] )
 			
 		} ,
