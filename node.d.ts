@@ -950,7 +950,7 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_check extends $.$mol_check {
-        event_click(next?: Event): void;
+        click(next?: Event): void;
         sub(): any[];
     }
 }
@@ -1091,7 +1091,7 @@ declare namespace $ {
         completed_all(val?: any, force?: $mol_mem_force): any;
         Add(): $$.$hyoo_todomvc_add;
         task_title_new(val?: any, force?: $mol_mem_force): any;
-        event_add(event?: any, force?: $mol_mem_force): any;
+        add(event?: any, force?: $mol_mem_force): any;
         List(): $$.$mol_list;
         task_rows(): readonly $mol_view[];
         Foot(): $mol_view;
@@ -1108,12 +1108,12 @@ declare namespace $ {
         filter_completed_label(): string;
         Sweep(): $mol_button_minor;
         sweep_enabled(): boolean;
-        event_sweep(event?: any, force?: $mol_mem_force): any;
+        sweep(event?: any, force?: $mol_mem_force): any;
         sweep_label(): string;
         Task_row(id: any): $hyoo_todomvc_task_row;
         task_completed(id: any, val?: any, force?: $mol_mem_force): any;
         task_title(id: any, val?: any, force?: $mol_mem_force): any;
-        event_task_drop(id: any, event?: any, force?: $mol_mem_force): any;
+        task_drop(id: any, event?: any, force?: $mol_mem_force): any;
     }
 }
 declare namespace $ {
@@ -1123,8 +1123,8 @@ declare namespace $ {
             keydown: (event?: any) => any;
             input: (event?: any) => any;
         };
-        event_press(event?: any, force?: $mol_mem_force): any;
-        event_done(event?: any, force?: $mol_mem_force): any;
+        press(event?: any, force?: $mol_mem_force): any;
+        done(event?: any, force?: $mol_mem_force): any;
     }
 }
 declare namespace $ {
@@ -1137,7 +1137,7 @@ declare namespace $ {
         title_hint(): string;
         title(val?: any, force?: $mol_mem_force): any;
         Drop(): $mol_button_typed;
-        event_drop(event?: any, force?: $mol_mem_force): any;
+        drop(event?: any, force?: $mol_mem_force): any;
         attr(): {
             hyoo_todomvc_task_row_completed: any;
         };
@@ -1150,7 +1150,7 @@ interface $hyoo_todomvc_task {
 }
 declare namespace $.$$ {
     class $hyoo_todomvc_add extends $.$hyoo_todomvc_add {
-        event_press(next?: KeyboardEvent): any;
+        press(next?: KeyboardEvent): any;
     }
     class $hyoo_todomvc extends $.$hyoo_todomvc {
         task_ids(next?: number[]): number[];
@@ -1163,13 +1163,13 @@ declare namespace $.$$ {
         head_complete_enabled(): boolean;
         pending_message(): string;
         new_id(): number;
-        event_add(next?: Event): void;
+        add(next?: Event): void;
         task_rows(): $hyoo_todomvc_task_row[];
         task(id: number, next?: $hyoo_todomvc_task): $hyoo_todomvc_task;
         task_completed(id: number, next?: boolean): boolean;
         task_title(id: number, next?: string): string;
-        event_task_drop(id: number, next?: Event): void;
-        event_sweep(): void;
+        task_drop(id: number, next?: Event): void;
+        sweep(): void;
         panels(): $mol_view[];
         foot_visible(): boolean;
         sweep_enabled(): boolean;

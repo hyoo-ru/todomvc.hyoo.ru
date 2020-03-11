@@ -3017,7 +3017,7 @@ var $;
     var $$;
     (function ($$) {
         class $mol_check extends $.$mol_check {
-            event_click(next) {
+            click(next) {
                 this.checked(!this.checked());
                 if (next)
                     next.preventDefault();
@@ -3555,14 +3555,14 @@ var $;
         Add() {
             return ((obj) => {
                 obj.value = (val) => this.task_title_new(val);
-                obj.event_done = (event) => this.event_add(event);
+                obj.done = (event) => this.add(event);
                 return obj;
             })(new this.$.$hyoo_todomvc_add());
         }
         task_title_new(val, force) {
             return (val !== void 0) ? val : "";
         }
-        event_add(event, force) {
+        add(event, force) {
             return (event !== void 0) ? event : null;
         }
         List() {
@@ -3640,7 +3640,7 @@ var $;
         Sweep() {
             return ((obj) => {
                 obj.enabled = () => this.sweep_enabled();
-                obj.event_click = (event) => this.event_sweep(event);
+                obj.click = (event) => this.sweep(event);
                 obj.sub = () => [this.sweep_label()];
                 return obj;
             })(new this.$.$mol_button_minor());
@@ -3648,7 +3648,7 @@ var $;
         sweep_enabled() {
             return true;
         }
-        event_sweep(event, force) {
+        sweep(event, force) {
             return (event !== void 0) ? event : null;
         }
         sweep_label() {
@@ -3658,7 +3658,7 @@ var $;
             return ((obj) => {
                 obj.completed = (val) => this.task_completed(id, val);
                 obj.title = (val) => this.task_title(id, val);
-                obj.event_drop = (event) => this.event_task_drop(id, event);
+                obj.drop = (event) => this.task_drop(id, event);
                 return obj;
             })(new this.$.$hyoo_todomvc_task_row());
         }
@@ -3668,7 +3668,7 @@ var $;
         task_title(id, val, force) {
             return (val !== void 0) ? val : "";
         }
-        event_task_drop(id, event, force) {
+        task_drop(id, event, force) {
             return (event !== void 0) ? event : null;
         }
     }
@@ -3698,7 +3698,7 @@ var $;
     ], $hyoo_todomvc.prototype, "task_title_new", null);
     __decorate([
         $.$mol_mem
-    ], $hyoo_todomvc.prototype, "event_add", null);
+    ], $hyoo_todomvc.prototype, "add", null);
     __decorate([
         $.$mol_mem
     ], $hyoo_todomvc.prototype, "List", null);
@@ -3725,7 +3725,7 @@ var $;
     ], $hyoo_todomvc.prototype, "Sweep", null);
     __decorate([
         $.$mol_mem
-    ], $hyoo_todomvc.prototype, "event_sweep", null);
+    ], $hyoo_todomvc.prototype, "sweep", null);
     __decorate([
         $.$mol_mem_key
     ], $hyoo_todomvc.prototype, "Task_row", null);
@@ -3737,7 +3737,7 @@ var $;
     ], $hyoo_todomvc.prototype, "task_title", null);
     __decorate([
         $.$mol_mem_key
-    ], $hyoo_todomvc.prototype, "event_task_drop", null);
+    ], $hyoo_todomvc.prototype, "task_drop", null);
     $.$hyoo_todomvc = $hyoo_todomvc;
 })($ || ($ = {}));
 (function ($) {
@@ -3746,21 +3746,21 @@ var $;
             return "What needs to be done?";
         }
         event() {
-            return (Object.assign(Object.assign({}, super.event()), { "keydown": (event) => this.event_press(event) }));
+            return (Object.assign(Object.assign({}, super.event()), { "keydown": (event) => this.press(event) }));
         }
-        event_press(event, force) {
+        press(event, force) {
             return (event !== void 0) ? event : null;
         }
-        event_done(event, force) {
+        done(event, force) {
             return (event !== void 0) ? event : null;
         }
     }
     __decorate([
         $.$mol_mem
-    ], $hyoo_todomvc_add.prototype, "event_press", null);
+    ], $hyoo_todomvc_add.prototype, "press", null);
     __decorate([
         $.$mol_mem
-    ], $hyoo_todomvc_add.prototype, "event_done", null);
+    ], $hyoo_todomvc_add.prototype, "done", null);
     $.$hyoo_todomvc_add = $hyoo_todomvc_add;
 })($ || ($ = {}));
 (function ($) {
@@ -3796,11 +3796,11 @@ var $;
         Drop() {
             return ((obj) => {
                 obj.sub = () => ["✖"];
-                obj.event_click = (event) => this.event_drop(event);
+                obj.click = (event) => this.drop(event);
                 return obj;
             })(new this.$.$mol_button_typed());
         }
-        event_drop(event, force) {
+        drop(event, force) {
             return (event !== void 0) ? event : null;
         }
         attr() {
@@ -3824,7 +3824,7 @@ var $;
     ], $hyoo_todomvc_task_row.prototype, "Drop", null);
     __decorate([
         $.$mol_mem
-    ], $hyoo_todomvc_task_row.prototype, "event_drop", null);
+    ], $hyoo_todomvc_task_row.prototype, "drop", null);
     $.$hyoo_todomvc_task_row = $hyoo_todomvc_task_row;
 })($ || ($ = {}));
 //todomvc.view.tree.js.map
@@ -3835,9 +3835,9 @@ var $;
     var $$;
     (function ($$) {
         class $hyoo_todomvc_add extends $.$hyoo_todomvc_add {
-            event_press(next) {
+            press(next) {
                 switch (next.keyCode) {
-                    case $.$mol_keyboard_code.enter: return this.event_done(next);
+                    case $.$mol_keyboard_code.enter: return this.done(next);
                 }
             }
         }
@@ -3885,7 +3885,7 @@ var $;
             new_id() {
                 return Math.max(1, 1 + Math.max(...this.task_ids()));
             }
-            event_add(next) {
+            add(next) {
                 var title = this.task_title_new();
                 if (!title)
                     return;
@@ -3912,11 +3912,11 @@ var $;
             task_title(id, next) {
                 return this.task(id, next === undefined ? undefined : Object.assign(Object.assign({}, this.task(id)), { title: next })).title;
             }
-            event_task_drop(id, next) {
+            task_drop(id, next) {
                 this.task(id, null);
                 this.task_ids(this.task_ids().filter(id2 => id !== id2));
             }
-            event_sweep() {
+            sweep() {
                 this.task_ids(this.task_ids().filter(id => {
                     if (!this.task(id).completed)
                         return true;
