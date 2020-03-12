@@ -98,10 +98,10 @@
 [hyoo_todomvc_task_row_complete] {
 	flex: 0 0 4rem;
 	padding: 1rem;
-	background: no-repeat center center url('mol/app/todomvc/todomvc_active.svg');
+	background: no-repeat center center url('hyoo/todomvc/todomvc_active.svg');
 }
 [hyoo_todomvc_task_row_complete][mol_check_checked] {
-	background: no-repeat center center url('mol/app/todomvc/todomvc_completed.svg');
+	background: no-repeat center center url('hyoo/todomvc/todomvc_completed.svg');
 }
 
 [hyoo_todomvc_task_row_title] {
