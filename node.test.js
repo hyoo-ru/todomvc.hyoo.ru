@@ -1524,7 +1524,7 @@ var $;
                 if (next === undefined) {
                     const cache = get_cache(this);
                     if (force === $.$mol_mem_force_cache)
-                        cache.obsolete(Number.NaN);
+                        return cache.obsolete(Number.NaN);
                     if ($.$mol_atom2.current)
                         return cache.get();
                     else
@@ -1638,7 +1638,7 @@ var $;
                 if (next === undefined) {
                     const cache = get_cache(this, key);
                     if (force === $.$mol_mem_force_cache)
-                        cache.obsolete();
+                        return cache.obsolete();
                     if ($.$mol_atom2.current)
                         return cache.get();
                     else
@@ -6125,7 +6125,7 @@ var $;
             super(message);
             this.errors = errors;
             if (errors.length) {
-                const stacks = [...errors.map(error => error.stack), this.stack];
+                const stacks = [...errors.map(error => error.message), this.stack];
                 const diff = $.$mol_diff_path(...stacks.map(stack => {
                     if (!stack)
                         return [];
