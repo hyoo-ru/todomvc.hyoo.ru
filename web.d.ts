@@ -1105,11 +1105,11 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_bar extends $mol_view {
+    }
 }
 
 declare namespace $ {
-    class $mol_bar extends $mol_view {
-    }
 }
 
 declare namespace $ {
