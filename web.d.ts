@@ -1204,7 +1204,7 @@ interface $hyoo_todomvc_task {
 }
 declare namespace $.$$ {
     class $hyoo_todomvc_add extends $.$hyoo_todomvc_add {
-        press(next?: KeyboardEvent): any;
+        press(next: KeyboardEvent): any;
     }
     class $hyoo_todomvc extends $.$hyoo_todomvc {
         task_ids(next?: number[]): number[];
@@ -1219,7 +1219,7 @@ declare namespace $.$$ {
         new_id(): number;
         add(next?: Event): void;
         task_rows(): $hyoo_todomvc_task_row[];
-        task(id: number, next?: $hyoo_todomvc_task): $hyoo_todomvc_task;
+        task(id: number, next?: $hyoo_todomvc_task | null): $hyoo_todomvc_task | null;
         task_completed(id: number, next?: boolean): boolean | undefined;
         task_title(id: number, next?: string): string | undefined;
         task_drop(id: number, next?: Event): void;
