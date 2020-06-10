@@ -86,6 +86,7 @@
 	color: rgba(275, 147, 147, 0.2);
 	text-rendering: optimizeLegibility;
 	text-transform: lowercase;
+	line-height: 1;
 }
 
 [hyoo_todomvc_task_row] {
