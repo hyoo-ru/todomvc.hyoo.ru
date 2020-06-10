@@ -81,6 +81,20 @@ namespace $.$$ {
 
 		} ,
 
+		'task delete'( $ ) {
+
+			const app = $hyoo_todomvc.make({ $ })
+
+			app.Add().value( 'test title' )
+			app.Add().done()
+
+			const top = app.task_rows()[0]
+			
+			top.Drop().click()
+			$mol_assert_not( app.task_rows().includes( top ) )
+
+		} ,
+
 		'navigation'( $ ) {
 
 			const app = $hyoo_todomvc.make({ $ })
@@ -110,6 +124,30 @@ namespace $.$$ {
 			$.$mol_state_arg.href( app.Filter_all().uri() )
 			$mol_assert_ok( app.task_rows().includes( task1 ) )
 			$mol_assert_ok( app.task_rows().includes( task2 ) )
+			
+		} ,
+
+		'clear completed'( $ ) {
+
+			const app = $hyoo_todomvc.make({ $ })
+
+			app.Add().value( 'test title' )
+			app.Add().done()
+
+			const task1 = app.task_rows()[0]
+			
+			app.Add().value( 'test title 2' )
+			app.Add().done()
+
+			const task2 = app.task_rows()[0]
+			task2.Complete().click()
+
+			$mol_assert_ok( app.task_rows().includes( task1 ) )
+			$mol_assert_ok( app.task_rows().includes( task2 ) )
+
+			app.Sweep().click()
+			$mol_assert_ok( app.task_rows().includes( task1 ) )
+			$mol_assert_not( app.task_rows().includes( task2 ) )
 			
 		} ,
 
