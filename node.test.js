@@ -4336,7 +4336,7 @@ var $;
                 var id = this.new_id();
                 var task = { completed: false, title };
                 this.task(id, task);
-                this.task_ids(this.task_ids().concat(id));
+                this.task_ids([id, ...this.task_ids()]);
                 this.task_title_new('');
             }
             task_rows() {
@@ -6704,46 +6704,68 @@ var $;
         $_1.$mol_test({
             'task add'($) {
                 const app = $$.$hyoo_todomvc.make({ $ });
-                $_1.$mol_assert_like(app.task_ids(), []);
-                app.Add().value('test title');
+                const rows = app.task_rows();
+                const title = Math.random().toString(16).slice(2);
+                app.Add().value('test task');
                 app.Add().done();
-                $_1.$mol_assert_like(app.task_ids(), [1]);
-                $_1.$mol_assert_equal(app.Task_row(1).title(), 'test title');
-                $_1.$mol_assert_equal(app.Task_row(1).completed(), false);
+                app.Add().value(title);
+                app.Add().done();
+                $_1.$mol_assert_equal(app.task_rows()[0].title(), title);
+                $_1.$mol_assert_equal(app.task_rows()[0].completed(), false);
+                $_1.$mol_assert_like(app.task_rows().slice(1), rows);
                 $_1.$mol_assert_equal(app.Add().value(), '');
             },
             'task rename'($) {
-                const app = $$.$hyoo_todomvc.make({ $ });
-                app.Add().value('test title');
-                app.Add().done();
-                $_1.$mol_assert_equal(app.task_title(1), 'test title');
-                app.Task_row(1).Title().value('test title 2');
-                $_1.$mol_assert_equal(app.task_title(1), 'test title 2');
+                const title = Math.random().toString(16).slice(2);
+                save: {
+                    const app = $$.$hyoo_todomvc.make({ $ });
+                    app.Add().value('test title');
+                    app.Add().done();
+                    app.task_rows()[0].Title().value(title);
+                }
+                load: {
+                    const app = $$.$hyoo_todomvc.make({ $ });
+                    $_1.$mol_assert_equal(app.task_rows()[0].Title().value(), title);
+                }
             },
             'task toggle'($) {
-                const app = $$.$hyoo_todomvc.make({ $ });
-                app.task_title_new('test title');
-                app.add();
-                $_1.$mol_assert_equal(app.task_completed(1), false);
-                app.Task_row(1).Complete().click();
-                $_1.$mol_assert_equal(app.task_completed(1), true);
-                app.Task_row(1).Complete().click();
-                $_1.$mol_assert_equal(app.task_completed(1), false);
+                save: {
+                    const app = $$.$hyoo_todomvc.make({ $ });
+                    app.Add().value('test title');
+                    app.Add().done();
+                    $_1.$mol_assert_equal(app.task_rows()[0].Complete().checked(), false);
+                    app.task_rows()[0].Complete().click();
+                }
+                toggle: {
+                    const app = $$.$hyoo_todomvc.make({ $ });
+                    $_1.$mol_assert_equal(app.task_rows()[0].Complete().checked(), true);
+                    app.task_rows()[0].Complete().click();
+                }
+                load: {
+                    const app = $$.$hyoo_todomvc.make({ $ });
+                    $_1.$mol_assert_equal(app.task_rows()[0].Complete().checked(), false);
+                }
             },
             'navigation'($) {
                 const app = $$.$hyoo_todomvc.make({ $ });
                 app.Add().value('test title');
                 app.Add().done();
+                const task1 = app.task_rows()[0];
                 app.Add().value('test title 2');
                 app.Add().done();
-                app.Task_row(1).Complete().click();
-                $_1.$mol_assert_like(app.task_ids_filtered(), [1, 2]);
+                const task2 = app.task_rows()[0];
+                task2.Complete().click();
+                $_1.$mol_assert_ok(app.task_rows().includes(task1));
+                $_1.$mol_assert_ok(app.task_rows().includes(task2));
                 $.$mol_state_arg.href(app.Filter_completed().uri());
-                $_1.$mol_assert_like(app.task_ids_filtered(), [1]);
+                $_1.$mol_assert_not(app.task_rows().includes(task1));
+                $_1.$mol_assert_ok(app.task_rows().includes(task2));
                 $.$mol_state_arg.href(app.Filter_active().uri());
-                $_1.$mol_assert_like(app.task_ids_filtered(), [2]);
+                $_1.$mol_assert_ok(app.task_rows().includes(task1));
+                $_1.$mol_assert_not(app.task_rows().includes(task2));
                 $.$mol_state_arg.href(app.Filter_all().uri());
-                $_1.$mol_assert_like(app.task_ids_filtered(), [1, 2]);
+                $_1.$mol_assert_ok(app.task_rows().includes(task1));
+                $_1.$mol_assert_ok(app.task_rows().includes(task2));
             },
         });
     })($$ = $_1.$$ || ($_1.$$ = {}));
