@@ -6785,8 +6785,6 @@ var $;
                 const app = $$.$hyoo_todomvc.make({ $ });
                 const rows = app.task_rows();
                 const title = Math.random().toString(16).slice(2);
-                app.Add().value('test task');
-                app.Add().done();
                 app.Add().value(title);
                 app.Add().done();
                 $_1.$mol_assert_equal(app.task_rows()[0].title(), title);
