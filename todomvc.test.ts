@@ -9,9 +9,6 @@ namespace $.$$ {
 			const rows = app.task_rows()
 			const title = Math.random().toString(16).slice(2)
 
-			app.Add().value( 'test task' )
-			app.Add().done()
-
 			app.Add().value( title )
 			app.Add().done()
 
