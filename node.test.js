@@ -2633,11 +2633,6 @@ var $;
         event() {
             return Object.assign(Object.assign({}, super.event()), { keydown: (event) => this.keydown(event) });
         }
-        keydown(event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
         key() {
             return {};
         }
@@ -2649,6 +2644,11 @@ var $;
         }
         mod_shift() {
             return false;
+        }
+        keydown(event) {
+            if (event !== undefined)
+                return event;
+            return null;
         }
     }
     __decorate([
@@ -2817,16 +2817,27 @@ var $;
         field() {
             return Object.assign(Object.assign({}, super.field()), { disabled: this.disabled(), value: this.value_changed(), placeholder: this.hint(), type: this.type(), spellcheck: this.spellcheck(), autocomplete: this.autocomplete_native() });
         }
+        attr() {
+            return Object.assign(Object.assign({}, super.attr()), { maxlength: this.length_max() });
+        }
+        event() {
+            return Object.assign(Object.assign({}, super.event()), { input: (event) => this.event_change(event), keydown: (event) => this.event_key_press(event) });
+        }
+        plugins() {
+            return [
+                this.Submit()
+            ];
+        }
         disabled() {
             return false;
-        }
-        value_changed(val) {
-            return this.value(val);
         }
         value(val) {
             if (val !== undefined)
                 return val;
             return "";
+        }
+        value_changed(val) {
+            return this.value(val);
         }
         hint() {
             return "";
@@ -2842,14 +2853,8 @@ var $;
         autocomplete_native() {
             return "";
         }
-        attr() {
-            return Object.assign(Object.assign({}, super.attr()), { maxlength: this.length_max() });
-        }
         length_max() {
             return Infinity;
-        }
-        event() {
-            return Object.assign(Object.assign({}, super.event()), { input: (event) => this.event_change(event), keydown: (event) => this.event_key_press(event) });
         }
         event_change(event) {
             if (event !== undefined)
@@ -2861,10 +2866,10 @@ var $;
                 return event;
             return null;
         }
-        plugins() {
-            return [
-                this.Submit()
-            ];
+        submit(event) {
+            if (event !== undefined)
+                return event;
+            return null;
         }
         Submit() {
             const obj = new this.$.$mol_hotkey();
@@ -2872,11 +2877,6 @@ var $;
                 enter: (event) => this.submit(event)
             });
             return obj;
-        }
-        submit(event) {
-            if (event !== undefined)
-                return event;
-            return null;
         }
     }
     __decorate([
@@ -2893,10 +2893,10 @@ var $;
     ], $mol_string.prototype, "event_key_press", null);
     __decorate([
         $.$mol_mem
-    ], $mol_string.prototype, "Submit", null);
+    ], $mol_string.prototype, "submit", null);
     __decorate([
         $.$mol_mem
-    ], $mol_string.prototype, "submit", null);
+    ], $mol_string.prototype, "Submit", null);
     $.$mol_string = $mol_string;
 })($ || ($ = {}));
 //string.view.tree.js.map
@@ -2984,30 +2984,8 @@ var $;
         event() {
             return Object.assign(Object.assign({}, super.event()), { click: (event) => this.event_activate(event), keypress: (event) => this.event_key_press(event) });
         }
-        event_activate(event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
-        event_key_press(event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
         attr() {
             return Object.assign(Object.assign({}, super.attr()), { disabled: this.disabled(), role: "button", tabindex: this.tab_index(), title: this.hint_or_error() });
-        }
-        disabled() {
-            return false;
-        }
-        tab_index() {
-            return 0;
-        }
-        hint_or_error() {
-            return this.hint();
-        }
-        hint() {
-            return "";
         }
         sub() {
             return [
@@ -3018,6 +2996,28 @@ var $;
             const obj = new this.$.$mol_speck();
             return obj;
         }
+        event_activate(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        event_key_press(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        disabled() {
+            return false;
+        }
+        tab_index() {
+            return 0;
+        }
+        hint() {
+            return "";
+        }
+        hint_or_error() {
+            return this.hint();
+        }
     }
     __decorate([
         $.$mol_mem
@@ -3027,13 +3027,13 @@ var $;
     ], $mol_button.prototype, "event_click", null);
     __decorate([
         $.$mol_mem
+    ], $mol_button.prototype, "Speck", null);
+    __decorate([
+        $.$mol_mem
     ], $mol_button.prototype, "event_activate", null);
     __decorate([
         $.$mol_mem
     ], $mol_button.prototype, "event_key_press", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_button.prototype, "Speck", null);
     $.$mol_button = $mol_button;
 })($ || ($ = {}));
 //button.view.tree.js.map
@@ -3387,6 +3387,17 @@ var $;
         attr() {
             return Object.assign(Object.assign({}, super.attr()), { href: this.uri(), title: this.hint(), target: this.target(), download: this.file_name(), mol_link_current: this.current(), mol_theme: this.theme() });
         }
+        sub() {
+            return [
+                this.title()
+            ];
+        }
+        arg() {
+            return {};
+        }
+        event() {
+            return Object.assign(Object.assign({}, super.event()), { click: (event) => this.click(event) });
+        }
         uri() {
             return "";
         }
@@ -3405,24 +3416,13 @@ var $;
         theme() {
             return null;
         }
-        sub() {
-            return [
-                this.title()
-            ];
-        }
-        arg() {
-            return {};
-        }
-        event() {
-            return Object.assign(Object.assign({}, super.event()), { click: (event) => this.click(event) });
-        }
-        click(event) {
-            return this.event_click(event);
-        }
         event_click(event) {
             if (event !== undefined)
                 return event;
             return null;
+        }
+        click(event) {
+            return this.event_click(event);
         }
     }
     __decorate([
@@ -3644,24 +3644,22 @@ var $;
         attr() {
             return Object.assign(Object.assign({}, super.attr()), { mol_check_checked: this.checked(), "aria-checked": this.checked(), role: "checkbox" });
         }
-        checked(val) {
-            if (val !== undefined)
-                return val;
-            return false;
-        }
         sub() {
             return [
                 this.Icon(),
                 this.label()
             ];
         }
+        checked(val) {
+            if (val !== undefined)
+                return val;
+            return false;
+        }
         Icon() {
             return null;
         }
-        label() {
-            return [
-                this.Title()
-            ];
+        title() {
+            return "";
         }
         Title() {
             const obj = new this.$.$mol_view();
@@ -3670,8 +3668,10 @@ var $;
             ];
             return obj;
         }
-        title() {
-            return "";
+        label() {
+            return [
+                this.Title()
+            ];
         }
     }
     __decorate([
@@ -3742,6 +3742,9 @@ var $;
         field() {
             return Object.assign(Object.assign({}, super.field()), { scrollTop: this.scroll_top(), scrollLeft: this.scroll_left(), tabIndex: this.tabindex() });
         }
+        event() {
+            return Object.assign(Object.assign({}, super.event()), { scroll: (event) => this.event_scroll(event) });
+        }
         scroll_top(val) {
             if (val !== undefined)
                 return val;
@@ -3754,9 +3757,6 @@ var $;
         }
         tabindex() {
             return -1;
-        }
-        event() {
-            return Object.assign(Object.assign({}, super.event()), { scroll: (event) => this.event_scroll(event) });
         }
         event_scroll(event) {
             if (event !== undefined)
@@ -3937,9 +3937,6 @@ var $;
         sub() {
             return this.rows();
         }
-        rows() {
-            return [];
-        }
         Empty() {
             const obj = new this.$.$mol_view();
             return obj;
@@ -3951,9 +3948,6 @@ var $;
             });
             return obj;
         }
-        gap_before() {
-            return 0;
-        }
         Gap_after() {
             const obj = new this.$.$mol_view();
             obj.style = () => ({
@@ -3961,14 +3955,20 @@ var $;
             });
             return obj;
         }
-        gap_after() {
-            return 0;
-        }
         view_window() {
             return [
                 0,
                 0
             ];
+        }
+        rows() {
+            return [];
+        }
+        gap_before() {
+            return 0;
+        }
+        gap_after() {
+            return 0;
         }
     }
     __decorate([
@@ -4202,12 +4202,11 @@ var $;
                 this.Page()
             ];
         }
-        Page() {
-            const obj = new this.$.$mol_list();
-            obj.rows = () => [
-                this.Title(),
-                this.Panel()
-            ];
+        Task_row(id) {
+            const obj = new this.$.$hyoo_todomvc_task_row();
+            obj.completed = (val) => this.task_completed(id, val);
+            obj.title = (val) => this.task_title(id, val);
+            obj.drop = (event) => this.task_drop(id, event);
             return obj;
         }
         Title() {
@@ -4218,37 +4217,6 @@ var $;
             ];
             return obj;
         }
-        Panel() {
-            const obj = new this.$.$mol_list();
-            obj.rows = () => this.panels();
-            return obj;
-        }
-        panels() {
-            return [
-                this.Head(),
-                this.List(),
-                this.Foot()
-            ];
-        }
-        Head() {
-            const obj = new this.$.$mol_view();
-            obj.minimal_height = () => 64;
-            obj.sub = () => this.Head_content();
-            return obj;
-        }
-        Head_content() {
-            return [
-                this.Head_complete(),
-                this.Add()
-            ];
-        }
-        Head_complete() {
-            const obj = new this.$.$mol_check();
-            obj.enabled = () => this.head_complete_enabled();
-            obj.checked = (val) => this.completed_all(val);
-            obj.title = () => "❯";
-            return obj;
-        }
         head_complete_enabled() {
             return false;
         }
@@ -4257,10 +4225,11 @@ var $;
                 return val;
             return false;
         }
-        Add() {
-            const obj = new this.$.$hyoo_todomvc_add();
-            obj.value = (val) => this.task_title_new(val);
-            obj.done = (event) => this.add(event);
+        Head_complete() {
+            const obj = new this.$.$mol_check();
+            obj.enabled = () => this.head_complete_enabled();
+            obj.checked = (val) => this.completed_all(val);
+            obj.title = () => "❯";
             return obj;
         }
         task_title_new(val) {
@@ -4273,25 +4242,34 @@ var $;
                 return event;
             return null;
         }
-        List() {
-            const obj = new this.$.$mol_list();
-            obj.rows = () => this.task_rows();
+        Add() {
+            const obj = new this.$.$hyoo_todomvc_add();
+            obj.value = (val) => this.task_title_new(val);
+            obj.done = (event) => this.add(event);
+            return obj;
+        }
+        Head_content() {
+            return [
+                this.Head_complete(),
+                this.Add()
+            ];
+        }
+        Head() {
+            const obj = new this.$.$mol_view();
+            obj.minimal_height = () => 64;
+            obj.sub = () => this.Head_content();
             return obj;
         }
         task_rows() {
             return [];
         }
-        Foot() {
-            const obj = new this.$.$mol_view();
-            obj.sub = () => this.foot_content();
+        List() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => this.task_rows();
             return obj;
         }
-        foot_content() {
-            return [
-                this.Pending(),
-                this.Filter(),
-                this.Sweep()
-            ];
+        pending_message() {
+            return "0 items left ";
         }
         Pending() {
             const obj = new this.$.$mol_view();
@@ -4300,20 +4278,8 @@ var $;
             ];
             return obj;
         }
-        pending_message() {
-            return "0 items left ";
-        }
-        Filter() {
-            const obj = new this.$.$mol_bar();
-            obj.sub = () => this.filterOptions();
-            return obj;
-        }
-        filterOptions() {
-            return [
-                this.Filter_all(),
-                this.Filter_active(),
-                this.Filter_completed()
-            ];
+        filter_all_label() {
+            return "All";
         }
         Filter_all() {
             const obj = new this.$.$mol_link();
@@ -4325,8 +4291,8 @@ var $;
             });
             return obj;
         }
-        filter_all_label() {
-            return "All";
+        filter_active_label() {
+            return "Active";
         }
         Filter_active() {
             const obj = new this.$.$mol_link();
@@ -4338,8 +4304,8 @@ var $;
             });
             return obj;
         }
-        filter_active_label() {
-            return "Active";
+        filter_completed_label() {
+            return "Completed";
         }
         Filter_completed() {
             const obj = new this.$.$mol_link();
@@ -4351,16 +4317,16 @@ var $;
             });
             return obj;
         }
-        filter_completed_label() {
-            return "Completed";
-        }
-        Sweep() {
-            const obj = new this.$.$mol_button_minor();
-            obj.enabled = () => this.sweep_enabled();
-            obj.click = (event) => this.sweep(event);
-            obj.sub = () => [
-                this.sweep_label()
+        filterOptions() {
+            return [
+                this.Filter_all(),
+                this.Filter_active(),
+                this.Filter_completed()
             ];
+        }
+        Filter() {
+            const obj = new this.$.$mol_bar();
+            obj.sub = () => this.filterOptions();
             return obj;
         }
         sweep_enabled() {
@@ -4374,11 +4340,45 @@ var $;
         sweep_label() {
             return "Clear completed";
         }
-        Task_row(id) {
-            const obj = new this.$.$hyoo_todomvc_task_row();
-            obj.completed = (val) => this.task_completed(id, val);
-            obj.title = (val) => this.task_title(id, val);
-            obj.drop = (event) => this.task_drop(id, event);
+        Sweep() {
+            const obj = new this.$.$mol_button_minor();
+            obj.enabled = () => this.sweep_enabled();
+            obj.click = (event) => this.sweep(event);
+            obj.sub = () => [
+                this.sweep_label()
+            ];
+            return obj;
+        }
+        foot_content() {
+            return [
+                this.Pending(),
+                this.Filter(),
+                this.Sweep()
+            ];
+        }
+        Foot() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => this.foot_content();
+            return obj;
+        }
+        panels() {
+            return [
+                this.Head(),
+                this.List(),
+                this.Foot()
+            ];
+        }
+        Panel() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => this.panels();
+            return obj;
+        }
+        Page() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [
+                this.Title(),
+                this.Panel()
+            ];
             return obj;
         }
         task_completed(id, val) {
@@ -4398,26 +4398,17 @@ var $;
         }
     }
     __decorate([
-        $.$mol_mem
-    ], $hyoo_todomvc.prototype, "Page", null);
+        $.$mol_mem_key
+    ], $hyoo_todomvc.prototype, "Task_row", null);
     __decorate([
         $.$mol_mem
     ], $hyoo_todomvc.prototype, "Title", null);
     __decorate([
         $.$mol_mem
-    ], $hyoo_todomvc.prototype, "Panel", null);
-    __decorate([
-        $.$mol_mem
-    ], $hyoo_todomvc.prototype, "Head", null);
-    __decorate([
-        $.$mol_mem
-    ], $hyoo_todomvc.prototype, "Head_complete", null);
-    __decorate([
-        $.$mol_mem
     ], $hyoo_todomvc.prototype, "completed_all", null);
     __decorate([
         $.$mol_mem
-    ], $hyoo_todomvc.prototype, "Add", null);
+    ], $hyoo_todomvc.prototype, "Head_complete", null);
     __decorate([
         $.$mol_mem
     ], $hyoo_todomvc.prototype, "task_title_new", null);
@@ -4426,16 +4417,16 @@ var $;
     ], $hyoo_todomvc.prototype, "add", null);
     __decorate([
         $.$mol_mem
+    ], $hyoo_todomvc.prototype, "Add", null);
+    __decorate([
+        $.$mol_mem
+    ], $hyoo_todomvc.prototype, "Head", null);
+    __decorate([
+        $.$mol_mem
     ], $hyoo_todomvc.prototype, "List", null);
     __decorate([
         $.$mol_mem
-    ], $hyoo_todomvc.prototype, "Foot", null);
-    __decorate([
-        $.$mol_mem
     ], $hyoo_todomvc.prototype, "Pending", null);
-    __decorate([
-        $.$mol_mem
-    ], $hyoo_todomvc.prototype, "Filter", null);
     __decorate([
         $.$mol_mem
     ], $hyoo_todomvc.prototype, "Filter_all", null);
@@ -4447,13 +4438,22 @@ var $;
     ], $hyoo_todomvc.prototype, "Filter_completed", null);
     __decorate([
         $.$mol_mem
-    ], $hyoo_todomvc.prototype, "Sweep", null);
+    ], $hyoo_todomvc.prototype, "Filter", null);
     __decorate([
         $.$mol_mem
     ], $hyoo_todomvc.prototype, "sweep", null);
     __decorate([
-        $.$mol_mem_key
-    ], $hyoo_todomvc.prototype, "Task_row", null);
+        $.$mol_mem
+    ], $hyoo_todomvc.prototype, "Sweep", null);
+    __decorate([
+        $.$mol_mem
+    ], $hyoo_todomvc.prototype, "Foot", null);
+    __decorate([
+        $.$mol_mem
+    ], $hyoo_todomvc.prototype, "Panel", null);
+    __decorate([
+        $.$mol_mem
+    ], $hyoo_todomvc.prototype, "Page", null);
     __decorate([
         $.$mol_mem_key
     ], $hyoo_todomvc.prototype, "task_completed", null);
@@ -4471,12 +4471,12 @@ var $;
         event() {
             return Object.assign(Object.assign({}, super.event()), { keydown: (event) => this.press(event) });
         }
-        press(event) {
+        done(event) {
             if (event !== undefined)
                 return event;
             return null;
         }
-        done(event) {
+        press(event) {
             if (event !== undefined)
                 return event;
             return null;
@@ -4484,10 +4484,10 @@ var $;
     }
     __decorate([
         $.$mol_mem
-    ], $hyoo_todomvc_add.prototype, "press", null);
+    ], $hyoo_todomvc_add.prototype, "done", null);
     __decorate([
         $.$mol_mem
-    ], $hyoo_todomvc_add.prototype, "done", null);
+    ], $hyoo_todomvc_add.prototype, "press", null);
     $.$hyoo_todomvc_add = $hyoo_todomvc_add;
     class $hyoo_todomvc_task_row extends $.$mol_view {
         minimal_height() {
@@ -4500,20 +4500,17 @@ var $;
                 this.Drop()
             ];
         }
-        Complete() {
-            const obj = new this.$.$mol_check();
-            obj.checked = (val) => this.completed(val);
-            return obj;
+        attr() {
+            return Object.assign(Object.assign({}, super.attr()), { hyoo_todomvc_task_row_completed: this.completed() });
         }
         completed(val) {
             if (val !== undefined)
                 return val;
             return false;
         }
-        Title() {
-            const obj = new this.$.$mol_string();
-            obj.hint = () => this.title_hint();
-            obj.value = (val) => this.title(val);
+        Complete() {
+            const obj = new this.$.$mol_check();
+            obj.checked = (val) => this.completed(val);
             return obj;
         }
         title_hint() {
@@ -4524,6 +4521,17 @@ var $;
                 return val;
             return "";
         }
+        Title() {
+            const obj = new this.$.$mol_string();
+            obj.hint = () => this.title_hint();
+            obj.value = (val) => this.title(val);
+            return obj;
+        }
+        drop(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
         Drop() {
             const obj = new this.$.$mol_button_typed();
             obj.sub = () => [
@@ -4532,33 +4540,25 @@ var $;
             obj.click = (event) => this.drop(event);
             return obj;
         }
-        drop(event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
-        attr() {
-            return Object.assign(Object.assign({}, super.attr()), { hyoo_todomvc_task_row_completed: this.completed() });
-        }
     }
-    __decorate([
-        $.$mol_mem
-    ], $hyoo_todomvc_task_row.prototype, "Complete", null);
     __decorate([
         $.$mol_mem
     ], $hyoo_todomvc_task_row.prototype, "completed", null);
     __decorate([
         $.$mol_mem
-    ], $hyoo_todomvc_task_row.prototype, "Title", null);
+    ], $hyoo_todomvc_task_row.prototype, "Complete", null);
     __decorate([
         $.$mol_mem
     ], $hyoo_todomvc_task_row.prototype, "title", null);
     __decorate([
         $.$mol_mem
-    ], $hyoo_todomvc_task_row.prototype, "Drop", null);
+    ], $hyoo_todomvc_task_row.prototype, "Title", null);
     __decorate([
         $.$mol_mem
     ], $hyoo_todomvc_task_row.prototype, "drop", null);
+    __decorate([
+        $.$mol_mem
+    ], $hyoo_todomvc_task_row.prototype, "Drop", null);
     $.$hyoo_todomvc_task_row = $hyoo_todomvc_task_row;
 })($ || ($ = {}));
 //todomvc.view.tree.js.map
@@ -4819,13 +4819,13 @@ var $;
         value(val) {
             return this.task_title_new(val);
         }
+        enabled() {
+            return this.head_complete_enabled();
+        }
         task_title_new(val) {
             if (val !== undefined)
                 return val;
             return "123";
-        }
-        enabled() {
-            return this.head_complete_enabled();
         }
         head_complete_enabled() {
             return false;

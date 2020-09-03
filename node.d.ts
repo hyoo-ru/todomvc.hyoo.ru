@@ -652,11 +652,11 @@ declare namespace $ {
         event(): {
             keydown: (event?: any) => any;
         };
-        keydown(event?: any): any;
         key(): {};
         mod_ctrl(): boolean;
         mod_alt(): boolean;
         mod_shift(): boolean;
+        keydown(event?: any): any;
     }
 }
 
@@ -888,26 +888,26 @@ declare namespace $ {
             spellcheck: boolean;
             autocomplete: string;
         };
-        disabled(): boolean;
-        value_changed(val?: any): any;
-        value(val?: any): any;
-        hint(): string;
-        type(val?: any): any;
-        spellcheck(): boolean;
-        autocomplete_native(): string;
         attr(): {
             maxlength: number;
         };
-        length_max(): number;
         event(): {
             input: (event?: any) => any;
             keydown: (event?: any) => any;
         };
+        plugins(): readonly any[];
+        disabled(): boolean;
+        value(val?: any): any;
+        value_changed(val?: any): any;
+        hint(): string;
+        type(val?: any): any;
+        spellcheck(): boolean;
+        autocomplete_native(): string;
+        length_max(): number;
         event_change(event?: any): any;
         event_key_press(event?: any): any;
-        plugins(): readonly any[];
-        Submit(): $$.$mol_hotkey;
         submit(event?: any): any;
+        Submit(): $$.$mol_hotkey;
     }
 }
 
@@ -948,20 +948,20 @@ declare namespace $ {
             click: (event?: any) => any;
             keypress: (event?: any) => any;
         };
-        event_activate(event?: any): any;
-        event_key_press(event?: any): any;
         attr(): {
             disabled: boolean;
             role: string;
             tabindex: number;
             title: string;
         };
-        disabled(): boolean;
-        tab_index(): number;
-        hint_or_error(): string;
-        hint(): string;
         sub(): readonly (string | number | boolean | $mol_view | Node)[];
         Speck(): $mol_speck;
+        event_activate(event?: any): any;
+        event_key_press(event?: any): any;
+        disabled(): boolean;
+        tab_index(): number;
+        hint(): string;
+        hint_or_error(): string;
     }
 }
 
@@ -1267,19 +1267,19 @@ declare namespace $ {
             mol_link_current: boolean;
             mol_theme: any;
         };
+        sub(): readonly (string | number | boolean | $mol_view | Node)[];
+        arg(): {};
+        event(): {
+            click: (event?: any) => any;
+        };
         uri(): string;
         hint(): string;
         target(): string;
         file_name(): string;
         current(): boolean;
         theme(): any;
-        sub(): readonly (string | number | boolean | $mol_view | Node)[];
-        arg(): {};
-        event(): {
-            click: (event?: any) => any;
-        };
-        click(event?: any): any;
         event_click(event?: any): any;
+        click(event?: any): any;
     }
 }
 
@@ -1346,12 +1346,12 @@ declare namespace $ {
             tabindex: number;
             title: string;
         };
-        checked(val?: any): any;
         sub(): readonly any[];
+        checked(val?: any): any;
         Icon(): any;
-        label(): readonly any[];
-        Title(): $mol_view;
         title(): string;
+        Title(): $mol_view;
+        label(): readonly any[];
     }
 }
 
@@ -1379,12 +1379,12 @@ declare namespace $ {
             scrollLeft: any;
             tabIndex: number;
         };
-        scroll_top(val?: any): any;
-        scroll_left(val?: any): any;
-        tabindex(): number;
         event(): {
             scroll: (event?: any) => any;
         };
+        scroll_top(val?: any): any;
+        scroll_left(val?: any): any;
+        tabindex(): number;
         event_scroll(event?: any): any;
     }
 }
@@ -1420,13 +1420,13 @@ declare namespace $ {
         render_visible_only(): boolean;
         render_over(): number;
         sub(): readonly $mol_view[];
-        rows(): readonly $mol_view[];
         Empty(): $mol_view;
         Gap_before(): $mol_view;
-        gap_before(): number;
         Gap_after(): $mol_view;
-        gap_after(): number;
         view_window(): readonly any[];
+        rows(): readonly $mol_view[];
+        gap_before(): number;
+        gap_after(): number;
     }
 }
 
@@ -1480,37 +1480,37 @@ declare namespace $ {
     class $hyoo_todomvc extends $mol_scroll {
         title(): string;
         sub(): readonly any[];
-        Page(): $$.$mol_list;
+        Task_row(id: any): $hyoo_todomvc_task_row;
         Title(): $mol_view;
-        Panel(): $$.$mol_list;
-        panels(): readonly any[];
-        Head(): $mol_view;
-        Head_content(): readonly any[];
-        Head_complete(): $$.$mol_check;
         head_complete_enabled(): boolean;
         completed_all(val?: any): any;
-        Add(): $$.$hyoo_todomvc_add;
+        Head_complete(): $$.$mol_check;
         task_title_new(val?: any): any;
         add(event?: any): any;
-        List(): $$.$mol_list;
+        Add(): $$.$hyoo_todomvc_add;
+        Head_content(): readonly any[];
+        Head(): $mol_view;
         task_rows(): readonly $mol_view[];
-        Foot(): $mol_view;
-        foot_content(): readonly any[];
-        Pending(): $mol_view;
+        List(): $$.$mol_list;
         pending_message(): string;
-        Filter(): $mol_bar;
-        filterOptions(): readonly any[];
-        Filter_all(): $$.$mol_link;
+        Pending(): $mol_view;
         filter_all_label(): string;
-        Filter_active(): $$.$mol_link;
+        Filter_all(): $$.$mol_link;
         filter_active_label(): string;
-        Filter_completed(): $$.$mol_link;
+        Filter_active(): $$.$mol_link;
         filter_completed_label(): string;
-        Sweep(): $mol_button_minor;
+        Filter_completed(): $$.$mol_link;
+        filterOptions(): readonly any[];
+        Filter(): $mol_bar;
         sweep_enabled(): boolean;
         sweep(event?: any): any;
         sweep_label(): string;
-        Task_row(id: any): $hyoo_todomvc_task_row;
+        Sweep(): $mol_button_minor;
+        foot_content(): readonly any[];
+        Foot(): $mol_view;
+        panels(): readonly any[];
+        Panel(): $$.$mol_list;
+        Page(): $$.$mol_list;
         task_completed(id: any, val?: any): any;
         task_title(id: any, val?: any): any;
         task_drop(id: any, event?: any): any;
@@ -1521,22 +1521,22 @@ declare namespace $ {
             keydown: (event?: any) => any;
             input: (event?: any) => any;
         };
-        press(event?: any): any;
         done(event?: any): any;
+        press(event?: any): any;
     }
     class $hyoo_todomvc_task_row extends $mol_view {
         minimal_height(): number;
         sub(): readonly any[];
-        Complete(): $$.$mol_check;
-        completed(val?: any): any;
-        Title(): $$.$mol_string;
-        title_hint(): string;
-        title(val?: any): any;
-        Drop(): $mol_button_typed;
-        drop(event?: any): any;
         attr(): {
             hyoo_todomvc_task_row_completed: any;
         };
+        completed(val?: any): any;
+        Complete(): $$.$mol_check;
+        title_hint(): string;
+        title(val?: any): any;
+        Title(): $$.$mol_string;
+        drop(event?: any): any;
+        Drop(): $mol_button_typed;
     }
 }
 
@@ -1611,8 +1611,8 @@ declare namespace $ {
 declare namespace $ {
     class $mol_view_tree_test_binding extends $mol_view {
         value(val?: any): any;
-        task_title_new(val?: any): any;
         enabled(): boolean;
+        task_title_new(val?: any): any;
         head_complete_enabled(): boolean;
     }
 }
