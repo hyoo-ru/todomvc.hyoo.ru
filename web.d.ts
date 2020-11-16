@@ -1201,6 +1201,7 @@ declare namespace $ {
             wrap?: 'wrap' | 'nowrap' | 'wrap-reverse' | Common;
         };
         zIndex: number;
+        opacity: number;
     }
     export {};
 }
