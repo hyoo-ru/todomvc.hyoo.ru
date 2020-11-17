@@ -1529,10 +1529,11 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_atom2_value(task) {
+    function $mol_atom2_value(task, next) {
         const cached = $mol_atom2.cached;
         try {
             $mol_atom2.cached = true;
+            $mol_atom2.cached_next = next;
             return task();
         }
         finally {
@@ -1580,8 +1581,13 @@ var $;
             return promise.then(obsolete, obsolete);
         }
         get() {
-            if ($mol_atom2.cached)
+            if ($mol_atom2.cached) {
+                if ($mol_atom2.cached_next !== undefined) {
+                    this.push($mol_atom2.cached_next);
+                    $mol_atom2.cached_next = undefined;
+                }
                 return this.value;
+            }
             const value = super.get();
             if (value === undefined)
                 $.$mol_fail(new Error(`Not defined: ${this}`));
@@ -1787,6 +1793,7 @@ var $;
     }
     $mol_atom2.logs = false;
     $mol_atom2.cached = false;
+    $mol_atom2.cached_next = undefined;
     $mol_atom2.reap_task = null;
     $mol_atom2.reap_queue = [];
     $.$mol_atom2 = $mol_atom2;
@@ -2571,6 +2578,47 @@ var $;
         [$.$mol_dev_format_head]() {
             return $.$mol_dev_format_span({}, $.$mol_dev_format_native(this), $.$mol_dev_format_shade('/'), $.$mol_dev_format_auto($.$mol_mem_cached(() => this.sub())));
         }
+        *view_find(check, path = []) {
+            path = [...path, this];
+            if (check('', path))
+                return yield this;
+            for (const item of this.sub()) {
+                if (item instanceof $mol_view) {
+                    yield* item.view_find(check, path);
+                }
+            }
+        }
+        force_render(path) {
+            const kids = this.sub();
+            const index = kids.findIndex(item => {
+                if (item instanceof $mol_view) {
+                    return path.has(item);
+                }
+                else {
+                    return false;
+                }
+            });
+            if (index >= 0) {
+                kids[index].force_render(path);
+            }
+            return index;
+        }
+        ensure_visible(view) {
+            this.view_find((_, path) => {
+                if (path[path.length - 1] !== view)
+                    return false;
+                $.$mol_fiber_defer(() => {
+                    this.force_render(new Set(path));
+                    $.$mol_fiber_defer(() => {
+                        view.dom_node().scrollIntoView({
+                            block: 'center',
+                            inline: 'center',
+                        });
+                    });
+                });
+                return true;
+            }).next().value;
+        }
     }
     $mol_view.watchers = new Set();
     __decorate([
@@ -2805,11 +2853,11 @@ var $;
                 if (event.defaultPrevented)
                     return;
                 let name = $.$mol_keyboard_code[event.keyCode];
-                if (this.mod_ctrl() && !event.ctrlKey)
+                if (this.mod_ctrl() !== event.ctrlKey)
                     return;
-                if (this.mod_alt() && !event.altKey)
+                if (this.mod_alt() !== event.altKey)
                     return;
-                if (this.mod_shift() && !event.shiftKey)
+                if (this.mod_shift() !== event.shiftKey)
                     return;
                 const handle = this.key()[name];
                 if (handle)
@@ -3023,7 +3071,7 @@ var $;
             return null;
         }
         event() {
-            return Object.assign(Object.assign({}, super.event()), { click: (event) => this.event_activate(event), keypress: (event) => this.event_key_press(event) });
+            return Object.assign(Object.assign({}, super.event()), { click: (event) => this.event_activate(event), keydown: (event) => this.event_key_press(event) });
         }
         attr() {
             return Object.assign(Object.assign({}, super.attr()), { disabled: this.disabled(), role: "button", tabindex: this.tab_index(), title: this.hint_or_error() });
@@ -4195,6 +4243,16 @@ var $;
                     }
                 }, 0);
             }
+            force_render(path) {
+                const index = super.force_render(path);
+                if (index) {
+                    const win = this.view_window();
+                    if (index < win[0] || index >= win[1]) {
+                        $.$mol_mem_cached(() => this.view_window(), [index, index + 1]);
+                    }
+                }
+                return index;
+            }
         }
         __decorate([
             $.$mol_mem
@@ -4665,7 +4723,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("hyoo/todomvc/todomvc.css", "[hyoo_todomvc] {\n\talign-self: stretch;\n\twidth: 100%;\n\tmargin: 0;\n\ttransition: none;\n}\n\n[hyoo_todomvc] [mol_string] ,\n[hyoo_todomvc] [mol_string]:focus ,\n[hyoo_todomvc] [mol_string]:hover ,\n[hyoo_todomvc] [mol_button] ,\n[hyoo_todomvc] [mol_button]:focus ,\n[hyoo_todomvc] [mol_button]:hover ,\n[hyoo_todomvc] [mol_link] ,\n[hyoo_todomvc] [mol_link]:focus ,\n[hyoo_todomvc] [mol_link]:hover {\n\tbox-shadow: none;\n\tbackground-color: transparent;\n}\n\n[hyoo_todomvc] [mol_link_current] {\n\tcolor: black;\n}\n\n[hyoo_todomvc] [mol_link]:not([mol_link_current]):hover ,\n[hyoo_todomvc] [mol_link]:not([mol_link_current]):focus {\n\ttext-decoration: underline;\n}\n\n[hyoo_todomvc_head_complete] {\n\tflex: 0 0 4rem;\n\ttransform: rotate( 90deg );\n\talign-items: center;\n\topacity: .5;\n\tpadding: 0;\n\tjustify-content: center;\n}\n[hyoo_todomvc_head_complete]:disabled {\n\tvisibility: hidden;\n}\n[hyoo_todomvc_head_complete][mol_check_checked] {\n\topacity: 1;\n}\n\n[hyoo_todomvc_add] {\n\tpadding: 0;\n\tflex: 1 1 auto;\n}\n\n[hyoo_todomvc_list] {\n\tfont-size: 1.5rem;\n\ttransition: none;\n}\n\n[hyoo_todomvc_page] {\n\tflex: 1 1 auto;\n\ttransition: none;\n}\n\n[hyoo_todomvc_panel] {\n\tbox-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);\n\tmax-width: 38rem;\n\t--mol_theme_back: white;\n\t--mol_theme_text: black;\n\tbackground-color: var(--mol_theme_back);\n\tdisplay: flex;\n\tflex-direction: column;\n\tmargin: 0 auto 2rem;\n\ttransition: none;\n}\n\n[hyoo_todomvc_head] {\n\tfont-size: 1.5rem;\n\tpadding: 0;\n\tdisplay: flex;\n\theight: 4rem;\n}\n\n[hyoo_todomvc_title] {\n\tword-break: normal;\n\tdisplay: block;\n\tpadding: .25rem;\n\tfont-size: 7rem;\n\tfont-weight: 100;\n\ttext-align: center;\n\tcolor: rgba(275, 147, 147, 0.2);\n\ttext-rendering: optimizeLegibility;\n\ttext-transform: lowercase;\n\tline-height: 1.5;\n}\n\n[hyoo_todomvc_task_row] {\n\tdisplay: flex;\n\tbackground-color: white;\n\tbox-shadow: 0 -1px 0 0 #ededed;\n\theight: 4rem;\n}\n\n[hyoo_todomvc_task_row_complete] {\n\tflex: 0 0 4rem;\n\tpadding: 1rem;\n\tbackground: no-repeat center center url('hyoo/todomvc/todomvc_active.svg');\n}\n[hyoo_todomvc_task_row_complete][mol_check_checked] {\n\tbackground: no-repeat center center url('hyoo/todomvc/todomvc_completed.svg');\n}\n\n[hyoo_todomvc_task_row_title] {\n\tpadding: 0;\n\tflex: 1 1 auto;\n}\n\n[hyoo_todomvc_task_row_completed] [hyoo_todomvc_task_row_title] {\n\tcolor: #d9d9d9;\n\ttext-decoration: line-through;\n}\n\n[hyoo_todomvc_task_row_drop] {\n\tfont-size: 1.25rem;\n\tflex:  0 04rem;\n}\n[hyoo_todomvc_task_row]:not(:hover) [hyoo_todomvc_task_row_drop]:not(:focus) {\n\topacity: 0;\n\tcolor: #cc9a9a;\n}\n\n[hyoo_todomvc_foot] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\talign-items: baseline;\n\tpadding: .5rem 1rem;\n\tcolor: #777;\n\tfont-size: .85rem;\n\tborder-top: 1px solid #ededed;\n\tbox-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -3px #f6f6f6, 0 9px 1px -3px rgba(0, 0, 0, 0.2), 0 16px 0 -6px #f6f6f6, 0 17px 2px -6px rgba(0, 0, 0, 0.2);\n}\n\n[hyoo_todomvc_pending] {\n\tpadding: .25rem;\n\tflex: 0 1 6rem;\n}\n\n[hyoo_todomvc_filter] {\n\tflex: 1 100 auto;\n\tdisplay: flex;\n\tjustify-content: center;\n\tmargin: .25rem;\n\tbox-shadow: none;\n}\n\n[hyoo_todomvc_sweep] {\n\tflex: 0 1 auto;\n\tpadding: .25rem;\n}\n[hyoo_todomvc_sweep][disabled] {\n\tvisibility: hidden;\n}\n\n[hyoo_todomvc_sweep]:hover ,\n[hyoo_todomvc_sweep]:focus {\n\ttext-decoration: underline;\n}\n");
+    $.$mol_style_attach("hyoo/todomvc/todomvc.css", "[hyoo_todomvc] {\n\talign-self: stretch;\n\twidth: 100%;\n\tmargin: 0;\n\ttransition: none;\n}\n\n[hyoo_todomvc] [mol_string] ,\n[hyoo_todomvc] [mol_string]:focus ,\n[hyoo_todomvc] [mol_string]:hover ,\n[hyoo_todomvc] [mol_button] ,\n[hyoo_todomvc] [mol_button]:focus ,\n[hyoo_todomvc] [mol_button]:hover ,\n[hyoo_todomvc] [mol_link] ,\n[hyoo_todomvc] [mol_link]:focus ,\n[hyoo_todomvc] [mol_link]:hover {\n\tbox-shadow: none;\n\tbackground-color: transparent;\n}\n\n[hyoo_todomvc] [mol_link_current] {\n\tcolor: black;\n}\n\n[hyoo_todomvc] [mol_link]:not([mol_link_current]):hover ,\n[hyoo_todomvc] [mol_link]:not([mol_link_current]):focus {\n\ttext-decoration: underline;\n}\n\n[hyoo_todomvc_head_complete] {\n\tflex: 0 0 4rem;\n\ttransform: rotate( 90deg );\n\talign-items: center;\n\topacity: .5;\n\tpadding: 0;\n\tjustify-content: center;\n}\n[hyoo_todomvc_head_complete]:disabled {\n\tvisibility: hidden;\n}\n[hyoo_todomvc_head_complete][mol_check_checked] {\n\topacity: 1;\n}\n\n[hyoo_todomvc_add] {\n\tpadding: 0;\n\tflex: 1 1 auto;\n}\n\n[hyoo_todomvc_list] {\n\tfont-size: 1.5rem;\n\ttransition: none;\n}\n\n[hyoo_todomvc_page] {\n\tflex: 1 1 auto;\n\ttransition: none;\n}\n\n[hyoo_todomvc_panel] {\n\tbox-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);\n\tmax-width: 38rem;\n\t--mol_theme_back: white;\n\t--mol_theme_text: black;\n\tbackground-color: var(--mol_theme_back);\n\tdisplay: flex;\n\tflex-direction: column;\n\tmargin: 0 auto 2rem;\n\ttransition: none;\n}\n\n[hyoo_todomvc_head] {\n\tfont-size: 1.5rem;\n\tpadding: 0;\n\tdisplay: flex;\n\theight: 4rem;\n}\n\n[hyoo_todomvc_title] {\n\tword-break: normal;\n\tdisplay: block;\n\tpadding: .25rem;\n\tfont-size: 7rem;\n\tfont-weight: 100;\n\ttext-align: center;\n\tcolor: rgba(275, 147, 147, 0.2);\n\ttext-rendering: optimizeLegibility;\n\ttext-transform: lowercase;\n\tline-height: 1.5;\n}\n\n[hyoo_todomvc_task_row] {\n\tdisplay: flex;\n\tbackground-color: white;\n\tbox-shadow: 0 -1px 0 0 #ededed;\n\theight: 4rem;\n}\n\n[hyoo_todomvc_task_row_complete] {\n\tflex: 0 0 4rem;\n\tpadding: 1rem;\n\tbackground: no-repeat center center url('hyoo/todomvc/todomvc_active.svg');\n}\n[hyoo_todomvc_task_row_complete][mol_check_checked] {\n\tbackground: no-repeat center center url('hyoo/todomvc/todomvc_completed.svg');\n}\n\n[hyoo_todomvc_task_row_title] {\n\tpadding: 0;\n\tflex: 1 1 auto;\n}\n\n[hyoo_todomvc_task_row_completed] [hyoo_todomvc_task_row_title] {\n\tcolor: #d9d9d9;\n\ttext-decoration: line-through;\n}\n\n[hyoo_todomvc_task_row_drop] {\n\tfont-size: 1.25rem;\n\tflex:  0 04rem;\n\tpadding: 1.25rem;\n}\n[hyoo_todomvc_task_row]:not(:hover) [hyoo_todomvc_task_row_drop]:not(:focus) {\n\topacity: 0;\n\tcolor: #cc9a9a;\n}\n\n[hyoo_todomvc_foot] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\talign-items: baseline;\n\tpadding: .5rem 1rem;\n\tcolor: #777;\n\tfont-size: .85rem;\n\tborder-top: 1px solid #ededed;\n\tbox-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -3px #f6f6f6, 0 9px 1px -3px rgba(0, 0, 0, 0.2), 0 16px 0 -6px #f6f6f6, 0 17px 2px -6px rgba(0, 0, 0, 0.2);\n}\n\n[hyoo_todomvc_pending] {\n\tpadding: .25rem;\n\tflex: 0 1 6rem;\n}\n\n[hyoo_todomvc_filter] {\n\tflex: 1 100 auto;\n\tdisplay: flex;\n\tjustify-content: center;\n\tmargin: .25rem;\n\tbox-shadow: none;\n}\n\n[hyoo_todomvc_sweep] {\n\tflex: 0 1 auto;\n\tpadding: .25rem;\n}\n[hyoo_todomvc_sweep][disabled] {\n\tvisibility: hidden;\n}\n\n[hyoo_todomvc_sweep]:hover ,\n[hyoo_todomvc_sweep]:focus {\n\ttext-decoration: underline;\n}\n");
 })($ || ($ = {}));
 //todomvc.css.js.map
 ;
