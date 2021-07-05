@@ -225,9 +225,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_deprecated(message: string): <Method extends (this: Host, ...args: readonly any[]) => any, Host extends { [key in Field]: Method; } & {
-        $: $;
-    }, Field extends keyof Host>(host: Host, field: Field, descr: TypedPropertyDescriptor<Method>) => void;
+    function $mol_deprecated(message: string): <Method extends (this: Host, ...args: readonly any[]) => any, Host extends { [key in Field]: Method; }, Field extends keyof Host>(host: Host, field: Field, descr: TypedPropertyDescriptor<Method>) => void;
 }
 
 declare namespace $ {
@@ -295,10 +293,6 @@ declare namespace $ {
         task: () => void;
         constructor(task: () => void);
     }
-}
-
-declare namespace $ {
-    function $mol_compare_any(a: any, b: any): boolean;
 }
 
 declare namespace $ {
@@ -896,11 +890,11 @@ declare namespace $ {
         enabled(): boolean;
         minimal_height(): number;
         autocomplete(): boolean;
-        selection(val?: any): any;
+        selection(val?: any): readonly number[];
         auto(): readonly any[];
         field(): {
             disabled: boolean;
-            value: any;
+            value: string;
             placeholder: string;
             spellcheck: boolean;
             autocomplete: string;
@@ -909,7 +903,7 @@ declare namespace $ {
         };
         attr(): {
             maxlength: number;
-            type: any;
+            type: string;
         };
         event(): {
             input: (event?: any) => any;
@@ -918,15 +912,15 @@ declare namespace $ {
         plugins(): readonly any[];
         selection_watcher(): any;
         disabled(): boolean;
-        value(val?: any): any;
-        value_changed(val?: any): any;
+        value(val?: any): string;
+        value_changed(val?: any): string;
         hint(): string;
         spellcheck(): boolean;
         autocomplete_native(): string;
         selection_end(): number;
         selection_start(): number;
         length_max(): number;
-        type(val?: any): any;
+        type(val?: any): string;
         event_change(event?: any): any;
         event_key_press(event?: any): any;
         submit(event?: any): any;
@@ -970,8 +964,8 @@ declare namespace $.$$ {
         autocomplete_native(): "on" | "off";
         selection_watcher(): $mol_dom_listener;
         selection_change(event: Event): void;
-        selection_start(): any;
-        selection_end(): any;
+        selection_start(): number;
+        selection_end(): number;
     }
 }
 
@@ -1411,15 +1405,15 @@ declare namespace $ {
 declare namespace $ {
     class $mol_check extends $mol_button_minor {
         attr(): {
-            mol_check_checked: any;
-            "aria-checked": any;
+            mol_check_checked: boolean;
+            "aria-checked": boolean;
             role: string;
             disabled: boolean;
             tabindex: number;
             title: string;
         };
         sub(): readonly $mol_view_content[];
-        checked(val?: any): any;
+        checked(val?: any): boolean;
         Icon(): any;
         title(): string;
         Title(): $mol_view;
@@ -1447,15 +1441,15 @@ declare namespace $ {
         minimal_height(): number;
         _event_scroll_timer(val?: any): any;
         field(): {
-            scrollTop: any;
-            scrollLeft: any;
+            scrollTop: number;
+            scrollLeft: number;
             tabIndex: number;
         };
         event(): {
             scroll: (event?: any) => any;
         };
-        scroll_top(val?: any): any;
-        scroll_left(val?: any): any;
+        scroll_top(val?: any): number;
+        scroll_left(val?: any): number;
         tabindex(): number;
         event_scroll(event?: any): any;
     }
@@ -1546,9 +1540,9 @@ declare namespace $ {
         Task_row(id: any): $hyoo_todomvc_task_row;
         Title(): $mol_view;
         head_complete_enabled(): boolean;
-        completed_all(val?: any): any;
+        completed_all(val?: any): boolean;
         Head_complete(): $$.$mol_check;
-        task_title_new(val?: any): any;
+        task_title_new(val?: any): string;
         add(event?: any): any;
         Add(): $$.$hyoo_todomvc_add;
         Head_content(): readonly any[];
@@ -1574,8 +1568,8 @@ declare namespace $ {
         panels(): readonly any[];
         Panel(): $$.$mol_list;
         Page(): $$.$mol_list;
-        task_completed(id: any, val?: any): any;
-        task_title(id: any, val?: any): any;
+        task_completed(id: any, val?: any): boolean;
+        task_title(id: any, val?: any): string;
         task_drop(id: any, event?: any): any;
     }
     class $hyoo_todomvc_add extends $mol_string {
@@ -1591,12 +1585,12 @@ declare namespace $ {
         minimal_height(): number;
         sub(): readonly any[];
         attr(): {
-            hyoo_todomvc_task_row_completed: any;
+            hyoo_todomvc_task_row_completed: boolean;
         };
-        completed(val?: any): any;
+        completed(val?: any): boolean;
         Complete(): $$.$mol_check;
         title_hint(): string;
-        title(val?: any): any;
+        title(val?: any): string;
         Title(): $$.$mol_string;
         drop(event?: any): any;
         Drop(): $mol_button_typed;
@@ -1642,8 +1636,8 @@ declare namespace $.$$ {
         add(next?: Event): void;
         task_rows(): $hyoo_todomvc_task_row[];
         task(id: number, next?: $hyoo_todomvc_task | null): $hyoo_todomvc_task | null;
-        task_completed(id: number, next?: boolean): boolean | undefined;
-        task_title(id: number, next?: string): string | undefined;
+        task_completed(id: number, next?: boolean): boolean;
+        task_title(id: number, next?: string): string;
         task_drop(id: number, next?: Event): void;
         sweep(): void;
         panels(): $mol_view[];
