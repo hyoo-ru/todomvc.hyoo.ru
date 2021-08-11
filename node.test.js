@@ -6570,6 +6570,21 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_guid(length = 8, exists = () => false) {
+        for (;;) {
+            let id = Math.random().toString(36).substring(2, length + 2).toUpperCase();
+            if (exists(id))
+                continue;
+            return id;
+        }
+    }
+    $.$mol_guid = $mol_guid;
+})($ || ($ = {}));
+//guid.js.map
+;
+"use strict";
+var $;
+(function ($) {
     $.$mol_test({
         'null by default'() {
             const key = String(Math.random());
@@ -6629,7 +6644,7 @@ var $;
             'task add'($) {
                 const app = $$.$hyoo_todomvc.make({ $ });
                 const rows = app.task_rows();
-                const title = Math.random().toString(16).slice(2);
+                const title = $_1.$mol_guid();
                 app.Add().value(title);
                 app.Add().done();
                 $_1.$mol_assert_equal(app.task_rows()[0].title(), title);
