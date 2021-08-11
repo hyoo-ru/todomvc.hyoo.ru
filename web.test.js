@@ -1877,7 +1877,7 @@ var $;
                 $_1.$mol_assert_equal(app.Add().value(), '');
             },
             'task rename'($) {
-                const title = Math.random().toString(16).slice(2);
+                const title = $_1.$mol_guid();
                 save: {
                     const app = $$.$hyoo_todomvc.make({ $ });
                     app.Add().value('test title');
