@@ -23,7 +23,7 @@ namespace $.$$ {
 
 		'task rename'( $ ) {
 
-			const title = Math.random().toString(16).slice(2)
+			const title = $mol_guid()
 
 			save: {
 
