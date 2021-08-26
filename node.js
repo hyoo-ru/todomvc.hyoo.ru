@@ -3513,9 +3513,6 @@ var $;
         '@': {
             mol_link_current: {
                 'true': {
-                    background: {
-                        color: $.$mol_theme.hover,
-                    },
                     color: $.$mol_theme.text,
                     textShadow: '0 0',
                 }
