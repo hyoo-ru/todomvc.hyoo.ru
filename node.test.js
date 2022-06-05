@@ -1700,8 +1700,7 @@ var $;
             };
         }
         complete() {
-            if (this.sub_empty)
-                this.destructor();
+            this.destructor();
         }
         put(next) {
             const prev = this.cache;
@@ -4146,6 +4145,84 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_paragraph extends $mol_view {
+        line_height() {
+            return 24;
+        }
+        letter_width() {
+            return 7;
+        }
+        width_limit() {
+            return Infinity;
+        }
+        sub() {
+            return [
+                this.title()
+            ];
+        }
+    }
+    $.$mol_paragraph = $mol_paragraph;
+})($ || ($ = {}));
+//mol/paragraph/-view.tree/paragraph.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/paragraph/paragraph.view.css", ":where([mol_paragraph]) {\n\tmargin: 0;\n\tmax-width: 100%;\n}\n");
+})($ || ($ = {}));
+//mol/paragraph/-css/paragraph.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_paragraph extends $.$mol_paragraph {
+            maximal_width() {
+                let width = 0;
+                const letter = this.letter_width();
+                for (const kid of this.sub()) {
+                    if (!kid)
+                        continue;
+                    if (kid instanceof $mol_view) {
+                        width += kid.maximal_width();
+                    }
+                    else if (typeof kid !== 'object') {
+                        width += String(kid).length * letter;
+                    }
+                }
+                return width;
+            }
+            width_limit() {
+                return this.$.$mol_window.size().width;
+            }
+            minimal_width() {
+                return this.letter_width();
+            }
+            row_width() {
+                return Math.max(Math.min(this.width_limit(), this.maximal_width()), this.letter_width());
+            }
+            minimal_height() {
+                return Math.max(1, Math.ceil(this.maximal_width() / this.row_width())) * this.line_height();
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_paragraph.prototype, "maximal_width", null);
+        __decorate([
+            $mol_mem
+        ], $mol_paragraph.prototype, "row_width", null);
+        __decorate([
+            $mol_mem
+        ], $mol_paragraph.prototype, "minimal_height", null);
+        $$.$mol_paragraph = $mol_paragraph;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/paragraph/paragraph.view.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_list extends $mol_view {
         render_visible_only() {
             return true;
@@ -4400,55 +4477,52 @@ var $;
         title() {
             return "Todos";
         }
+        attr() {
+            return {
+                ...super.attr(),
+                mol_theme: "$mol_theme_light"
+            };
+        }
         sub() {
             return [
                 this.Page()
             ];
         }
-        Task_row(id) {
-            const obj = new this.$.$hyoo_todomvc_task_row();
-            obj.completed = (val) => this.task_completed(id, val);
-            obj.title = (val) => this.task_title(id, val);
-            obj.drop = (event) => this.task_drop(id, event);
-            return obj;
-        }
         Title() {
-            const obj = new this.$.$mol_view();
+            const obj = new this.$.$mol_paragraph();
             obj.minimal_height = () => 176;
-            obj.sub = () => [
-                this.title()
-            ];
+            obj.title = () => this.title();
             return obj;
         }
         head_complete_enabled() {
             return false;
         }
-        completed_all(val) {
-            if (val !== undefined)
-                return val;
+        completed_all(next) {
+            if (next !== undefined)
+                return next;
             return false;
         }
         Head_complete() {
             const obj = new this.$.$mol_check();
             obj.enabled = () => this.head_complete_enabled();
-            obj.checked = (val) => this.completed_all(val);
+            obj.checked = (next) => this.completed_all(next);
             obj.title = () => "❯";
             return obj;
         }
-        task_title_new(val) {
-            if (val !== undefined)
-                return val;
+        task_title_new(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
-        add(event) {
-            if (event !== undefined)
-                return event;
+        add(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
         Add() {
             const obj = new this.$.$hyoo_todomvc_add();
-            obj.value = (val) => this.task_title_new(val);
-            obj.done = (event) => this.add(event);
+            obj.value = (next) => this.task_title_new(next);
+            obj.done = (next) => this.add(next);
             return obj;
         }
         Head_content() {
@@ -4463,8 +4537,32 @@ var $;
             obj.sub = () => this.Head_content();
             return obj;
         }
+        task_completed(id, next) {
+            if (next !== undefined)
+                return next;
+            return false;
+        }
+        task_title(id, next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        task_drop(id, next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        Task_row(id) {
+            const obj = new this.$.$hyoo_todomvc_task_row();
+            obj.completed = (next) => this.task_completed(id, next);
+            obj.title = (next) => this.task_title(id, next);
+            obj.drop = (next) => this.task_drop(id, next);
+            return obj;
+        }
         task_rows() {
-            return [];
+            return [
+                this.Task_row("0")
+            ];
         }
         List() {
             const obj = new this.$.$mol_list();
@@ -4475,46 +4573,29 @@ var $;
             return "0 items left ";
         }
         Pending() {
-            const obj = new this.$.$mol_view();
-            obj.sub = () => [
-                this.pending_message()
-            ];
+            const obj = new this.$.$mol_paragraph();
+            obj.title = () => this.pending_message();
             return obj;
-        }
-        filter_all_label() {
-            return "All";
         }
         Filter_all() {
             const obj = new this.$.$mol_link();
-            obj.sub = () => [
-                this.filter_all_label()
-            ];
+            obj.title = () => "All";
             obj.arg = () => ({
                 completed: null
             });
             return obj;
         }
-        filter_active_label() {
-            return "Active";
-        }
         Filter_active() {
             const obj = new this.$.$mol_link();
-            obj.sub = () => [
-                this.filter_active_label()
-            ];
+            obj.title = () => "Active";
             obj.arg = () => ({
                 completed: "false"
             });
             return obj;
         }
-        filter_completed_label() {
-            return "Completed";
-        }
         Filter_completed() {
             const obj = new this.$.$mol_link();
-            obj.sub = () => [
-                this.filter_completed_label()
-            ];
+            obj.title = () => "Completed";
             obj.arg = () => ({
                 completed: "true"
             });
@@ -4535,9 +4616,9 @@ var $;
         sweep_enabled() {
             return true;
         }
-        sweep(event) {
-            if (event !== undefined)
-                return event;
+        sweep(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
         sweep_label() {
@@ -4546,7 +4627,7 @@ var $;
         Sweep() {
             const obj = new this.$.$mol_button_minor();
             obj.enabled = () => this.sweep_enabled();
-            obj.click = (event) => this.sweep(event);
+            obj.click = (next) => this.sweep(next);
             obj.sub = () => [
                 this.sweep_label()
             ];
@@ -4584,25 +4665,7 @@ var $;
             ];
             return obj;
         }
-        task_completed(id, val) {
-            if (val !== undefined)
-                return val;
-            return false;
-        }
-        task_title(id, val) {
-            if (val !== undefined)
-                return val;
-            return "";
-        }
-        task_drop(id, event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
     }
-    __decorate([
-        $mol_mem_key
-    ], $hyoo_todomvc.prototype, "Task_row", null);
     __decorate([
         $mol_mem
     ], $hyoo_todomvc.prototype, "Title", null);
@@ -4624,6 +4687,18 @@ var $;
     __decorate([
         $mol_mem
     ], $hyoo_todomvc.prototype, "Head", null);
+    __decorate([
+        $mol_mem_key
+    ], $hyoo_todomvc.prototype, "task_completed", null);
+    __decorate([
+        $mol_mem_key
+    ], $hyoo_todomvc.prototype, "task_title", null);
+    __decorate([
+        $mol_mem_key
+    ], $hyoo_todomvc.prototype, "task_drop", null);
+    __decorate([
+        $mol_mem_key
+    ], $hyoo_todomvc.prototype, "Task_row", null);
     __decorate([
         $mol_mem
     ], $hyoo_todomvc.prototype, "List", null);
@@ -4657,15 +4732,6 @@ var $;
     __decorate([
         $mol_mem
     ], $hyoo_todomvc.prototype, "Page", null);
-    __decorate([
-        $mol_mem_key
-    ], $hyoo_todomvc.prototype, "task_completed", null);
-    __decorate([
-        $mol_mem_key
-    ], $hyoo_todomvc.prototype, "task_title", null);
-    __decorate([
-        $mol_mem_key
-    ], $hyoo_todomvc.prototype, "task_drop", null);
     $.$hyoo_todomvc = $hyoo_todomvc;
     class $hyoo_todomvc_add extends $mol_string {
         hint() {
@@ -4674,17 +4740,17 @@ var $;
         event() {
             return {
                 ...super.event(),
-                keydown: (event) => this.press(event)
+                keydown: (next) => this.press(next)
             };
         }
-        done(event) {
-            if (event !== undefined)
-                return event;
+        done(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
-        press(event) {
-            if (event !== undefined)
-                return event;
+        press(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
     }
@@ -4699,6 +4765,12 @@ var $;
         minimal_height() {
             return 64;
         }
+        attr() {
+            return {
+                ...super.attr(),
+                hyoo_todomvc_task_row_completed: this.completed()
+            };
+        }
         sub() {
             return [
                 this.Complete(),
@@ -4706,39 +4778,33 @@ var $;
                 this.Drop()
             ];
         }
-        attr() {
-            return {
-                ...super.attr(),
-                hyoo_todomvc_task_row_completed: this.completed()
-            };
-        }
-        completed(val) {
-            if (val !== undefined)
-                return val;
+        completed(next) {
+            if (next !== undefined)
+                return next;
             return false;
         }
         Complete() {
             const obj = new this.$.$mol_check();
-            obj.checked = (val) => this.completed(val);
+            obj.checked = (next) => this.completed(next);
             return obj;
         }
         title_hint() {
             return "Task title";
         }
-        title(val) {
-            if (val !== undefined)
-                return val;
+        title(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
         Title() {
             const obj = new this.$.$mol_string();
             obj.hint = () => this.title_hint();
-            obj.value = (val) => this.title(val);
+            obj.value = (next) => this.title(next);
             return obj;
         }
-        drop(event) {
-            if (event !== undefined)
-                return event;
+        drop(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
         Drop() {
@@ -4746,7 +4812,7 @@ var $;
             obj.sub = () => [
                 "✖"
             ];
-            obj.click = (event) => this.drop(event);
+            obj.click = (next) => this.drop(next);
             return obj;
         }
     }

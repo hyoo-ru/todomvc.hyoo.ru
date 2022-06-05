@@ -1353,6 +1353,28 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_paragraph extends $mol_view {
+        line_height(): number;
+        letter_width(): number;
+        width_limit(): number;
+        sub(): readonly any[];
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_paragraph extends $.$mol_paragraph {
+        maximal_width(): number;
+        width_limit(): number;
+        minimal_width(): number;
+        row_width(): number;
+        minimal_height(): number;
+    }
+}
+
+declare namespace $ {
     class $mol_list extends $mol_view {
         render_visible_only(): boolean;
         render_over(): number;
@@ -1406,31 +1428,34 @@ declare namespace $ {
 declare namespace $ {
     class $hyoo_todomvc extends $mol_scroll {
         title(): string;
+        attr(): {
+            mol_theme: string;
+        };
         sub(): readonly any[];
-        Task_row(id: any): $hyoo_todomvc_task_row;
-        Title(): $mol_view;
+        Title(): $$.$mol_paragraph;
         head_complete_enabled(): boolean;
-        completed_all(val?: any): boolean;
+        completed_all(next?: any): boolean;
         Head_complete(): $$.$mol_check;
-        task_title_new(val?: any): string;
-        add(event?: any): any;
+        task_title_new(next?: any): string;
+        add(next?: any): any;
         Add(): $$.$hyoo_todomvc_add;
         Head_content(): readonly any[];
         Head(): $mol_view;
+        task_completed(id: any, next?: any): boolean;
+        task_title(id: any, next?: any): string;
+        task_drop(id: any, next?: any): any;
+        Task_row(id: any): $hyoo_todomvc_task_row;
         task_rows(): readonly $mol_view[];
         List(): $$.$mol_list;
         pending_message(): string;
-        Pending(): $mol_view;
-        filter_all_label(): string;
+        Pending(): $$.$mol_paragraph;
         Filter_all(): $$.$mol_link;
-        filter_active_label(): string;
         Filter_active(): $$.$mol_link;
-        filter_completed_label(): string;
         Filter_completed(): $$.$mol_link;
         filterOptions(): readonly any[];
         Filter(): $mol_bar;
         sweep_enabled(): boolean;
-        sweep(event?: any): any;
+        sweep(next?: any): any;
         sweep_label(): string;
         Sweep(): $mol_button_minor;
         foot_content(): readonly any[];
@@ -1438,31 +1463,28 @@ declare namespace $ {
         panels(): readonly any[];
         Panel(): $$.$mol_list;
         Page(): $$.$mol_list;
-        task_completed(id: any, val?: any): boolean;
-        task_title(id: any, val?: any): string;
-        task_drop(id: any, event?: any): any;
     }
     class $hyoo_todomvc_add extends $mol_string {
         hint(): string;
         event(): {
-            keydown: (event?: any) => any;
+            keydown: (next?: any) => any;
             input: (event?: any) => any;
         };
-        done(event?: any): any;
-        press(event?: any): any;
+        done(next?: any): any;
+        press(next?: any): any;
     }
     class $hyoo_todomvc_task_row extends $mol_view {
         minimal_height(): number;
-        sub(): readonly any[];
         attr(): {
             hyoo_todomvc_task_row_completed: boolean;
         };
-        completed(val?: any): boolean;
+        sub(): readonly any[];
+        completed(next?: any): boolean;
         Complete(): $$.$mol_check;
         title_hint(): string;
-        title(val?: any): string;
+        title(next?: any): string;
         Title(): $$.$mol_string;
-        drop(event?: any): any;
+        drop(next?: any): any;
         Drop(): $mol_button_typed;
     }
 }
