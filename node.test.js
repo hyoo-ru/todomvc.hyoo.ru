@@ -8404,10 +8404,8 @@ var $;
                 app.Add().done();
                 const task1 = app.task_rows().at(-1);
                 const task2 = add_task(app, title);
-                $mol_assert_equal(task1.title(), title);
-                $mol_assert_equal(task1.title(), title);
-                $mol_assert_equal(task2.completed(), false);
-                $mol_assert_equal(task2.completed(), false);
+                $mol_assert_equal(task1.title(), task1.title(), title);
+                $mol_assert_equal(task2.completed(), task2.completed(), false);
                 $mol_assert_like(app.task_rows(), [...rows, task1, task2]);
                 $mol_assert_equal(app.Add().value(), '');
             },
