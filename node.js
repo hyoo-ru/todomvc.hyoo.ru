@@ -2929,7 +2929,10 @@ var $;
         selection(val) {
             if (val !== undefined)
                 return val;
-            return [];
+            return [
+                0,
+                0
+            ];
         }
         auto() {
             return [
@@ -2945,7 +2948,8 @@ var $;
                 spellcheck: this.spellcheck(),
                 autocomplete: this.autocomplete_native(),
                 selectionEnd: this.selection_end(),
-                selectionStart: this.selection_start()
+                selectionStart: this.selection_start(),
+                inputMode: this.keyboard()
             };
         }
         attr() {
@@ -2998,6 +3002,9 @@ var $;
         }
         selection_start() {
             return 0;
+        }
+        keyboard() {
+            return "text";
         }
         length_max() {
             return Infinity;
@@ -3096,7 +3103,7 @@ var $;
             event_change(next) {
                 if (!next)
                     return;
-                this.value(next.target.value);
+                this.value_changed(next.target.value);
                 this.selection_change(next);
             }
             hint_visible() {
@@ -3115,10 +3122,12 @@ var $;
                 const el = this.dom_node();
                 if (el !== this.$.$mol_dom_context.document.activeElement)
                     return;
-                this.selection([
+                const [from, to] = this.selection([
                     el.selectionStart,
                     el.selectionEnd,
                 ]);
+                el.selectionEnd = to;
+                el.selectionStart = from;
             }
             selection_start() {
                 return this.selection()[0];
