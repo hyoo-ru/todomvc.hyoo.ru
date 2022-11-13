@@ -87,6 +87,7 @@
     "$mol_type_keys",
     "$mol_hotkey",
     "$mol_keyboard",
+    "$mol_layer",
     "$mol_dom_listener",
     "$mol_button",
     "$mol_speck",
