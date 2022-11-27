@@ -107,6 +107,7 @@
     "$mol_state",
     "$mol_svg_path",
     "$mol_state_arg",
+    "$mol_action",
     "$mol_check",
     "$mol_button_minor",
     "$mol_button_typed",
