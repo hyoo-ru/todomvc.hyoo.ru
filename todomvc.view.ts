@@ -5,16 +5,6 @@ interface $hyoo_todomvc_task {
 
 namespace $.$$ {
 	
-	export class $hyoo_todomvc_add extends $.$hyoo_todomvc_add {
-		
-		press( next : KeyboardEvent ) {
-			switch( next.keyCode ) {
-				case $mol_keyboard_code.enter : return this.done( next )
-			}
-		}
-		
-	}
-	
 	export class $hyoo_todomvc extends $.$hyoo_todomvc {
 		
 		task_ids( next? : number[] ) : number[] {

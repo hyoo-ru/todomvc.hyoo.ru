@@ -2,7 +2,7 @@ namespace $.$$ {
 	
 	function add_task( app: $hyoo_todomvc, title = 'test title' ) {
 		app.Add().value( title )
-		app.Add().done()
+		app.Add().submit()
 		return app.task_rows().at(-1)!
 	}
 
@@ -16,7 +16,7 @@ namespace $.$$ {
 			const title = $mol_guid()
 
 			app.Add().value( title )
-			app.Add().done()
+			app.Add().submit()
 			
 			const task1 = app.task_rows().at(-1)!
 			const task2 = add_task( app, title )
