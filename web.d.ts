@@ -1460,7 +1460,7 @@ declare namespace $ {
         Head_complete(): $$.$mol_check;
         task_title_new(next?: any): string;
         add(next?: any): any;
-        Add(): $$.$hyoo_todomvc_add;
+        Add(): $$.$mol_string;
         Head_content(): readonly any[];
         Head(): $mol_view;
         task_completed(id: any, next?: any): boolean;
@@ -1485,15 +1485,6 @@ declare namespace $ {
         panels(): readonly any[];
         Panel(): $$.$mol_list;
         Page(): $$.$mol_list;
-    }
-    class $hyoo_todomvc_add extends $mol_string {
-        hint(): string;
-        event(): {
-            keydown: (next?: any) => any;
-            input: (event?: any) => any;
-        };
-        done(next?: any): any;
-        press(next?: any): any;
     }
     class $hyoo_todomvc_task_row extends $mol_view {
         minimal_height(): number;
@@ -1537,9 +1528,6 @@ interface $hyoo_todomvc_task {
     title?: string;
 }
 declare namespace $.$$ {
-    class $hyoo_todomvc_add extends $.$hyoo_todomvc_add {
-        press(next: KeyboardEvent): any;
-    }
     class $hyoo_todomvc extends $.$hyoo_todomvc {
         task_ids(next?: number[]): number[];
         arg_completed(): string | null;

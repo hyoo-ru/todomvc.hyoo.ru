@@ -181,9 +181,10 @@ $hyoo_todomvc $mol_scroll
 								enabled <= head_complete_enabled false
 								checked? <=> completed_all? false
 								title \❯
-							<= Add $hyoo_todomvc_add
+							<= Add $mol_string
+								hint \What needs to be done?
 								value? <=> task_title_new? \
-								done? <=> add? null
+								submit? <=> add? null
 					<= List $mol_list rows <= task_rows /$mol_view
 						<= Task_row*0 $hyoo_todomvc_task_row
 							completed? <=> task_completed*? false
@@ -206,13 +207,6 @@ $hyoo_todomvc $mol_scroll
 							enabled <= sweep_enabled true
 							click? <=> sweep? null
 							sub / <= sweep_label \Clear completed
-
-$hyoo_todomvc_add $mol_string
-	hint \What needs to be done?
-	event *
-		^
-		keydown? <=> press? null
-	done? null
 
 $hyoo_todomvc_task_row $mol_view
 	minimal_height 64

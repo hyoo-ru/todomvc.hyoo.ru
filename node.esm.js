@@ -4679,9 +4679,10 @@ var $;
             return null;
         }
         Add() {
-            const obj = new this.$.$hyoo_todomvc_add();
+            const obj = new this.$.$mol_string();
+            obj.hint = () => "What needs to be done?";
             obj.value = (next) => this.task_title_new(next);
-            obj.done = (next) => this.add(next);
+            obj.submit = (next) => this.add(next);
             return obj;
         }
         Head_content() {
@@ -4892,34 +4893,6 @@ var $;
         $mol_mem
     ], $hyoo_todomvc.prototype, "Page", null);
     $.$hyoo_todomvc = $hyoo_todomvc;
-    class $hyoo_todomvc_add extends $mol_string {
-        hint() {
-            return "What needs to be done?";
-        }
-        event() {
-            return {
-                ...super.event(),
-                keydown: (next) => this.press(next)
-            };
-        }
-        done(next) {
-            if (next !== undefined)
-                return next;
-            return null;
-        }
-        press(next) {
-            if (next !== undefined)
-                return next;
-            return null;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $hyoo_todomvc_add.prototype, "done", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_todomvc_add.prototype, "press", null);
-    $.$hyoo_todomvc_add = $hyoo_todomvc_add;
     class $hyoo_todomvc_task_row extends $mol_view {
         minimal_height() {
             return 64;
@@ -5066,14 +5039,6 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        class $hyoo_todomvc_add extends $.$hyoo_todomvc_add {
-            press(next) {
-                switch (next.keyCode) {
-                    case $mol_keyboard_code.enter: return this.done(next);
-                }
-            }
-        }
-        $$.$hyoo_todomvc_add = $hyoo_todomvc_add;
         class $hyoo_todomvc extends $.$hyoo_todomvc {
             task_ids(next) {
                 return this.$.$mol_state_local.value(this.state_key('mol-todos'), next) || [];

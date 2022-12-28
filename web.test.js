@@ -3765,7 +3765,7 @@ var $;
     (function ($$) {
         function add_task(app, title = 'test title') {
             app.Add().value(title);
-            app.Add().done();
+            app.Add().submit();
             return app.task_rows().at(-1);
         }
         $mol_test({
@@ -3774,7 +3774,7 @@ var $;
                 const rows = app.task_rows();
                 const title = $mol_guid();
                 app.Add().value(title);
-                app.Add().done();
+                app.Add().submit();
                 const task1 = app.task_rows().at(-1);
                 const task2 = add_task(app, title);
                 $mol_assert_equal(task1.title(), task1.title(), title);
