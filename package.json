@@ -66,6 +66,8 @@
     "$mol_dev",
     "$mol_after_frame",
     "$mol_after_timeout",
+    "$mol_promise_like",
+    "$mol_promise",
     "$mol_func_name",
     "$mol_func",
     "$mol_key",
