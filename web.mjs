@@ -245,6 +245,15 @@ var $;
     let all = [];
     let el = null;
     let timer = null;
+    function $mol_style_attach_force() {
+        if (all.length) {
+            el.innerHTML += '\n' + all.join('\n\n');
+            all = [];
+        }
+        timer = null;
+        return el;
+    }
+    $.$mol_style_attach_force = $mol_style_attach_force;
     function $mol_style_attach(id, text) {
         all.push(`/* ${id} */\n\n${text}`);
         if (timer)
@@ -255,12 +264,7 @@ var $;
         el = doc.createElement('style');
         el.id = `$mol_style_attach`;
         doc.head.appendChild(el);
-        timer = new $mol_after_tick(() => {
-            el.innerHTML = '\n' + all.join('\n\n');
-            all = [];
-            el = null;
-            timer = null;
-        });
+        timer = new $mol_after_tick($mol_style_attach_force);
         return el;
     }
     $.$mol_style_attach = $mol_style_attach;
@@ -1376,6 +1380,7 @@ var $;
             }
         };
         Reflect.defineProperty(descr2.value, 'name', { value: orig.name + ' ' });
+        Reflect.defineProperty(descr2.value, 'length', { value: orig.length });
         Object.assign(descr2.value, { orig });
         Reflect.defineProperty(host, field, descr2);
         return descr2;
@@ -1413,6 +1418,7 @@ var $;
             }
         };
         Reflect.defineProperty(descr2.value, 'name', { value: orig.name + ' ' });
+        Reflect.defineProperty(descr2.value, 'length', { value: orig.length });
         Object.assign(descr2.value, { orig });
         Reflect.defineProperty(host, field, descr2);
         return descr2;
@@ -2263,6 +2269,9 @@ var $;
             }
             return names;
         }
+        theme(next = null) {
+            return next;
+        }
         attr_static() {
             let attrs = {};
             for (let name of this.view_names())
@@ -2270,7 +2279,9 @@ var $;
             return attrs;
         }
         attr() {
-            return {};
+            return {
+                mol_theme: this.theme(),
+            };
         }
         style_size() {
             return {
@@ -2386,6 +2397,9 @@ var $;
     __decorate([
         $mol_memo.method
     ], $mol_view.prototype, "view_names", null);
+    __decorate([
+        $mol_mem
+    ], $mol_view.prototype, "theme", null);
     __decorate([
         $mol_mem_key
     ], $mol_view, "Root", null);
