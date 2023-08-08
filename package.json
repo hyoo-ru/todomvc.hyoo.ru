@@ -101,6 +101,7 @@
     "$mol_type_keys_extract",
     "$mol_type_keys",
     "$mol_theme",
+    "$mol_style_prop",
     "$mol_style_func",
     "$mol_style_unit",
     "$mol_decor",
