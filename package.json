@@ -114,6 +114,7 @@
     "$mol_action",
     "$mol_dom_listener",
     "$mol_layer",
+    "$mol_type_enforce",
     "$mol_button",
     "$mol_speck",
     "$mol_link",
