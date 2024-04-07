@@ -1200,12 +1200,12 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_hotkey__mod_ctrl__IDLZFQ7W = $mol_type_enforce<
+	type $mol_hotkey__mod_ctrl__TRX0ZZ0K = $mol_type_enforce<
 		ReturnType< $mol_string['submit_with_ctrl'] >
 		,
 		ReturnType< $mol_hotkey['mod_ctrl'] >
 	>
-	type $mol_hotkey__key__6MEEKDFW = $mol_type_enforce<
+	type $mol_hotkey__key__IQ83R74N = $mol_type_enforce<
 		({ 
 			enter( next?: ReturnType< $mol_string['submit'] > ): ReturnType< $mol_string['submit'] >,
 		}) 
@@ -1301,7 +1301,7 @@ declare namespace $ {
 //# sourceMappingURL=speck.view.tree.d.ts.map
 declare namespace $ {
 
-	type $mol_speck__value__L3E92RZ4 = $mol_type_enforce<
+	type $mol_speck__value__EJ96HUAY = $mol_type_enforce<
 		ReturnType< $mol_button['error'] >
 		,
 		ReturnType< $mol_speck['value'] >
@@ -1507,7 +1507,7 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_view__sub__D724L3K5 = $mol_type_enforce<
+	type $mol_view__sub__DEE6VKRH = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
@@ -1615,14 +1615,14 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_view__style__379UO69R = $mol_type_enforce<
+	type $mol_view__style__WWQFQ2A4 = $mol_type_enforce<
 		({ 
 			'paddingTop': ReturnType< $mol_list['gap_before'] >,
 		}) 
 		,
 		ReturnType< $mol_view['style'] >
 	>
-	type $mol_view__style__2DGFZIF6 = $mol_type_enforce<
+	type $mol_view__style__W4ZHNV6X = $mol_type_enforce<
 		({ 
 			'paddingTop': ReturnType< $mol_list['gap_after'] >,
 		}) 
@@ -1808,148 +1808,148 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_paragraph__minimal_height__ONCBRXP5 = $mol_type_enforce<
+	type $mol_paragraph__minimal_height__463N25VF = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_paragraph['minimal_height'] >
 	>
-	type $mol_paragraph__title__JKKEB9JU = $mol_type_enforce<
+	type $mol_paragraph__title__KBWCO663 = $mol_type_enforce<
 		ReturnType< $hyoo_todomvc['title'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_check__enabled__AVHAX53P = $mol_type_enforce<
+	type $mol_check__enabled__0A6L72X4 = $mol_type_enforce<
 		ReturnType< $hyoo_todomvc['head_complete_enabled'] >
 		,
 		ReturnType< $mol_check['enabled'] >
 	>
-	type $mol_check__checked__5T9QA6ZL = $mol_type_enforce<
+	type $mol_check__checked__IPNUBV8S = $mol_type_enforce<
 		ReturnType< $hyoo_todomvc['completed_all'] >
 		,
 		ReturnType< $mol_check['checked'] >
 	>
-	type $mol_check__title__CE0KSUG9 = $mol_type_enforce<
+	type $mol_check__title__BMGGFR6P = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_check['title'] >
 	>
-	type $mol_string__hint__894BYVBJ = $mol_type_enforce<
+	type $mol_string__hint__0OJWUS9K = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value__ARUMKGUF = $mol_type_enforce<
+	type $mol_string__value__PPZUXHLB = $mol_type_enforce<
 		ReturnType< $hyoo_todomvc['task_title_new'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_string__submit__PIF98LCT = $mol_type_enforce<
+	type $mol_string__submit__11BYPM35 = $mol_type_enforce<
 		ReturnType< $hyoo_todomvc['add'] >
 		,
 		ReturnType< $mol_string['submit'] >
 	>
-	type $mol_view__minimal_height__12MVVG79 = $mol_type_enforce<
+	type $mol_view__minimal_height__UYWQDOL9 = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_view['minimal_height'] >
 	>
-	type $mol_view__sub__7I45QOXS = $mol_type_enforce<
+	type $mol_view__sub__XJJ8J21U = $mol_type_enforce<
 		ReturnType< $hyoo_todomvc['Head_content'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $hyoo_todomvc_task_row__completed__4L39QD4G = $mol_type_enforce<
+	type $hyoo_todomvc_task_row__completed__N3J76Z7J = $mol_type_enforce<
 		ReturnType< $hyoo_todomvc['task_completed'] >
 		,
 		ReturnType< $hyoo_todomvc_task_row['completed'] >
 	>
-	type $hyoo_todomvc_task_row__title__VYPTTUDN = $mol_type_enforce<
+	type $hyoo_todomvc_task_row__title__RJPPBNF4 = $mol_type_enforce<
 		ReturnType< $hyoo_todomvc['task_title'] >
 		,
 		ReturnType< $hyoo_todomvc_task_row['title'] >
 	>
-	type $hyoo_todomvc_task_row__drop__VV1G350E = $mol_type_enforce<
+	type $hyoo_todomvc_task_row__drop__I3UK08LR = $mol_type_enforce<
 		ReturnType< $hyoo_todomvc['task_drop'] >
 		,
 		ReturnType< $hyoo_todomvc_task_row['drop'] >
 	>
-	type $mol_list__rows__5I8VEV59 = $mol_type_enforce<
+	type $mol_list__rows__HH9WOFZA = $mol_type_enforce<
 		ReturnType< $hyoo_todomvc['task_rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_paragraph__title__Y04ERX7F = $mol_type_enforce<
+	type $mol_paragraph__title__KQNXWQ0U = $mol_type_enforce<
 		ReturnType< $hyoo_todomvc['pending_message'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_link__title__7CHW77C3 = $mol_type_enforce<
+	type $mol_link__title__9HPCM2UU = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_link['title'] >
 	>
-	type $mol_link__arg__P6KYVBS7 = $mol_type_enforce<
+	type $mol_link__arg__9QVNLUKB = $mol_type_enforce<
 		({ 
 			'completed': any,
 		}) 
 		,
 		ReturnType< $mol_link['arg'] >
 	>
-	type $mol_link__title__KCXGRGG5 = $mol_type_enforce<
+	type $mol_link__title__3HTQY4QL = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_link['title'] >
 	>
-	type $mol_link__arg__TLPTDL91 = $mol_type_enforce<
+	type $mol_link__arg__D1QVFXXH = $mol_type_enforce<
 		({ 
 			'completed': string,
 		}) 
 		,
 		ReturnType< $mol_link['arg'] >
 	>
-	type $mol_link__title__CTHB6GNY = $mol_type_enforce<
+	type $mol_link__title__MDVE4XXY = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_link['title'] >
 	>
-	type $mol_link__arg__IJJFRQ9R = $mol_type_enforce<
+	type $mol_link__arg__ZL7HFDKW = $mol_type_enforce<
 		({ 
 			'completed': string,
 		}) 
 		,
 		ReturnType< $mol_link['arg'] >
 	>
-	type $mol_bar__sub__1ZTNYDSX = $mol_type_enforce<
+	type $mol_bar__sub__EKDLPAC8 = $mol_type_enforce<
 		ReturnType< $hyoo_todomvc['filterOptions'] >
 		,
 		ReturnType< $mol_bar['sub'] >
 	>
-	type $mol_button_minor__enabled__ZNIMUB9Y = $mol_type_enforce<
+	type $mol_button_minor__enabled__WUXDT3QE = $mol_type_enforce<
 		ReturnType< $hyoo_todomvc['sweep_enabled'] >
 		,
 		ReturnType< $mol_button_minor['enabled'] >
 	>
-	type $mol_button_minor__click__0NH841C7 = $mol_type_enforce<
+	type $mol_button_minor__click__KDUL42B5 = $mol_type_enforce<
 		ReturnType< $hyoo_todomvc['sweep'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__sub__3KDATECF = $mol_type_enforce<
+	type $mol_button_minor__sub__I6GVNDTB = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_view__sub__LD97R1I1 = $mol_type_enforce<
+	type $mol_view__sub__VUI5O2BN = $mol_type_enforce<
 		ReturnType< $hyoo_todomvc['foot_content'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_list__rows__NXOR6JQJ = $mol_type_enforce<
+	type $mol_list__rows__1PDHST0X = $mol_type_enforce<
 		ReturnType< $hyoo_todomvc['panels'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_list__rows__P0DXFI0O = $mol_type_enforce<
+	type $mol_list__rows__LFJQHI0H = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
@@ -1993,27 +1993,27 @@ declare namespace $ {
 		sub( ): readonly(any)[]
 	}
 	
-	type $mol_check__checked__DIJXPFE2 = $mol_type_enforce<
+	type $mol_check__checked__E4E0WXXG = $mol_type_enforce<
 		ReturnType< $hyoo_todomvc_task_row['completed'] >
 		,
 		ReturnType< $mol_check['checked'] >
 	>
-	type $mol_string__hint__QD44FIMW = $mol_type_enforce<
+	type $mol_string__hint__WJMF7RO2 = $mol_type_enforce<
 		ReturnType< $hyoo_todomvc_task_row['title_hint'] >
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value__KMVFXQ5W = $mol_type_enforce<
+	type $mol_string__value__5OT6IERM = $mol_type_enforce<
 		ReturnType< $hyoo_todomvc_task_row['title'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_button_typed__sub__WPSLKECG = $mol_type_enforce<
+	type $mol_button_typed__sub__4WU8H76R = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_typed['sub'] >
 	>
-	type $mol_button_typed__click__VF1STF23 = $mol_type_enforce<
+	type $mol_button_typed__click__AU993SYC = $mol_type_enforce<
 		ReturnType< $hyoo_todomvc_task_row['drop'] >
 		,
 		ReturnType< $mol_button_typed['click'] >
