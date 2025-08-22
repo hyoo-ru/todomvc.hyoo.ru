@@ -338,6 +338,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_try<Result>(handler2: () => Result): Result | Error;
+}
+
+declare namespace $ {
     function $mol_fail_log(error: unknown): boolean;
 }
 
