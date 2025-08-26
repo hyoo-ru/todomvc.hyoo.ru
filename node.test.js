@@ -589,7 +589,7 @@ var $;
             if (typeof val === 'function') {
                 return $mol_dev_format_native(val);
             }
-            if (Error.isError(val)) {
+            if (val instanceof Error) {
                 return $mol_dev_format_span({}, $mol_dev_format_native(val), ' ', $mol_dev_format_button('throw', () => $mol_fail_hidden(val)));
             }
             if (val instanceof Promise) {
@@ -1315,7 +1315,7 @@ var $;
 var $;
 (function ($) {
     function $mol_log3_area_lazy(event) {
-        const self = this;
+        const self = this.$;
         const stack = self.$mol_log3_stack;
         const deep = stack.length;
         let logged = false;
