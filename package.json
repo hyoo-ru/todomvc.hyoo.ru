@@ -159,6 +159,7 @@
     "$mol_check",
     "$mol_button_minor",
     "$mol_button_typed",
+    "$mol_dom_event",
     "$mol_scroll",
     "$mol_print",
     "$mol_paragraph",
