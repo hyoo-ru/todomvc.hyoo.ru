@@ -1,0 +1,10 @@
+{
+	"name": "hyoo_todomvc",
+	"short_name": "hyoo_todomvc",
+	"description": "",
+	"id": "hyoo_todomvc",
+	"start_url": ".",
+	"display": "standalone",
+	"background_color": "#000000",
+	"theme_color": "#000000"
+}
