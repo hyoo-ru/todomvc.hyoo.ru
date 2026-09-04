@@ -4366,6 +4366,13 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    $.$mol_mem_cached = $mol_wire_probe;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_dom_listener extends $mol_object {
         _node;
         _event;
@@ -4435,22 +4442,27 @@ var $;
                 const el = this.dom_node();
                 const from = el.selectionStart;
                 const to = el.selectionEnd;
-                try {
-                    el.value = this.value_changed(el.value);
-                }
-                catch (error) {
-                    const el = this.dom_node();
-                    if (error instanceof Error) {
-                        el.setCustomValidity(error.message);
-                        el.reportValidity();
-                    }
-                    $mol_fail_hidden(error);
-                }
+                el.value = this.value_changed(el.value);
                 if (to === null)
                     return;
                 el.selectionEnd = to;
                 el.selectionStart = from;
                 this.selection_change(next);
+            }
+            value_changed(next) {
+                const el = this.dom_node();
+                try {
+                    el.setCustomValidity('');
+                    return this.value(next);
+                }
+                catch (error) {
+                    $mol_fail_log(error);
+                    if (error instanceof Error) {
+                        el.setCustomValidity(error.message);
+                        el.reportValidity();
+                    }
+                    return next ?? $mol_mem_cached(() => this.value_changed()) ?? '';
+                }
             }
             error_report() {
                 try {
@@ -4511,6 +4523,9 @@ var $;
         __decorate([
             $mol_action
         ], $mol_string.prototype, "event_change", null);
+        __decorate([
+            $mol_mem
+        ], $mol_string.prototype, "value_changed", null);
         __decorate([
             $mol_mem
         ], $mol_string.prototype, "error_report", null);
@@ -5693,13 +5708,6 @@ var $;
 	($mol_mem(($.$mol_list.prototype), "Gap_after"));
 	($mol_mem(($.$mol_list.prototype), "view_window_shift"));
 
-
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_mem_cached = $mol_wire_probe;
-})($ || ($ = {}));
 
 ;
 "use strict";
